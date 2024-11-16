@@ -1,15 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
     [SerializeField]
     private int lives = 3;
-    [SerializeField]
-    private TMP_Text livesTextInfo;
     [SerializeField]
     private GameObject ballPrefab;
     [SerializeField]
@@ -19,23 +13,29 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private PaddleController paddle;
     [SerializeField]
+    private Canvas inGameUiScreen;
+    [SerializeField]
     private Canvas gameOverScreen;
+
+        private InGameUIScript inGameUIScript;
 
     // Start is called before the first frame update
     void Start()
     {
         SpawnNewBall();
+        inGameUiScreen = Instantiate(inGameUiScreen);
+        inGameUIScript = inGameUiScreen.GetComponentInChildren<InGameUIScript>();
         //InvokeRepeating("CheckForEndOfGame", 20, 3);
     }
 
     // Update is called once per frame
     void Update()
     {
-        livesTextInfo.text = "Lives: " + lives.ToString();
+        inGameUIScript.UpdateLives(lives);
 
         if (lives <= 0)
         {
-            gameOverScreen.GetComponent<Canvas>().enabled = true;
+            Instantiate(gameOverScreen);
             Time.timeScale = 0;
         }
     }
