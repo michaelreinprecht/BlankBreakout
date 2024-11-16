@@ -17,15 +17,15 @@ public class Ball : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Paddle"))
         {
-            //SoundManager.Instance.PlaySound("PaddleHit");
+            SoundManager.Instance.PlaySound("PaddleHit");
         }
         if (collision.gameObject.CompareTag("BrickA") || collision.gameObject.CompareTag("BrickB") || collision.gameObject.CompareTag("BrickC"))
         {
-            //SoundManager.Instance.PlaySound("BrickHit1");
+            SoundManager.Instance.PlaySound("BrickHit1");
         }
         if (collision.gameObject.CompareTag("Border"))
         {
-            //SoundManager.Instance.PlaySound("WallHit");
+            SoundManager.Instance.PlaySound("WallHit");
         }
     }
 

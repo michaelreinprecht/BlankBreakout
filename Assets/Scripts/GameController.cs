@@ -24,7 +24,6 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //gameOverScreen.GetComponent<Canvas>().enabled = false;
         SpawnNewBall();
         //InvokeRepeating("CheckForEndOfGame", 20, 3);
     }
