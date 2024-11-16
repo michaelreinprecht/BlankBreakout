@@ -5,7 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Border
-  - asdf
+  - DeathZone
+  - Paddle
+  - BrickA
+  - BrickB
+  - BrickC
+  - Ball
   layers:
   - Default
   - TransparentFX
