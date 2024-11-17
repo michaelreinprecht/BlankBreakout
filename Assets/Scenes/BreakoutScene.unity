@@ -856,7 +856,7 @@ Transform:
   m_GameObject: {fileID: 1227953999}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1068,11 +1068,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lives: 3
   ballPrefab: {fileID: 7460249737223380425, guid: 043549164891d944e9dcb337dfb1471e, type: 3}
-  ballStartPosition: {x: 0, y: 0, z: 0}
+  ballStartPosition: {x: 0, y: -2.5, z: 0}
   paddleStartPosition: {x: 0, y: 0, z: 0}
   paddle: {fileID: 602180792}
   gameOverScreen: {fileID: 6550842813847986719, guid: 4b853cb9c283acd46968b33a4e9431ff, type: 3}
   inGameUIController: {fileID: 9004497512326310940}
+  brickAPrefab: {fileID: 5482137910447832529, guid: 4fe2df34a4167a3479759f408e50546f, type: 3}
+  brickBPrefab: {fileID: 0}
+  brickCPrefab: {fileID: 0}
+  brickRows: 3
+  brickColumns: 6
+  minimumBrickNumber: 1
 --- !u!4 &1798285288
 Transform:
   m_ObjectHideFlags: 0
@@ -1082,7 +1088,7 @@ Transform:
   m_GameObject: {fileID: 1798285286}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

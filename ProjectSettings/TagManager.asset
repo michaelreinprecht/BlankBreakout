@@ -11,6 +11,7 @@ TagManager:
   - BrickB
   - BrickC
   - Ball
+  - Brick
   layers:
   - Default
   - TransparentFX
