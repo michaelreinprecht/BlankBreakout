@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,8 @@ using UnityEngine;
 public class PaddleController : MonoBehaviour
 {
     [SerializeField] private float paddleSpeed = 10f;
-
+    [SerializeField] private float xPosMin = -6.6f;
+    [SerializeField] private float xPosMax = 6.6f;
     // Update is called once per frame
     void Update()
     {
@@ -15,10 +17,13 @@ public class PaddleController : MonoBehaviour
         } else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) 
         {
             float horizontal = Input.GetAxis("Horizontal");
-            Vector3 newPosition = transform.position + new Vector3(horizontal * paddleSpeed * Time.deltaTime, 0, 0);
+            float xDelta = horizontal * paddleSpeed * Time.deltaTime;
+            float newXPosition = transform.position.x + xDelta;
 
-            //TODO: set bounds for border
-            transform.position = newPosition;
+            // Clamp the X position to keep the paddle within bounds
+            newXPosition = Mathf.Clamp(newXPosition, xPosMin, xPosMax);
+
+            transform.position = new Vector3(newXPosition, transform.position.y, transform.position.z);
         }
     }
 
@@ -33,8 +38,15 @@ public class PaddleController : MonoBehaviour
 
             float hitfactor = (hitpoint.x - transform.position.x) / transform.localScale.x;
 
-            Vector3 newDirection = new Vector3(hitfactor, 1, 0).normalized;
-            ballRb.velocity = newDirection;
+            Vector3 paddleDirection = new Vector3(hitfactor, 1, 0).normalized;
+            Vector3 existingDirection = ballRb.velocity.normalized;
+
+            float blendFactor = 0.5f; // 50% new direction, 50% existing direction
+
+            Vector3 combinedDirection = (paddleDirection * blendFactor + existingDirection * (1 - blendFactor)).normalized;
+
+            // Set the new velocity, keeping the ball speed constant
+            ballRb.velocity = combinedDirection * ballRb.velocity.magnitude;
         }
     }
 }

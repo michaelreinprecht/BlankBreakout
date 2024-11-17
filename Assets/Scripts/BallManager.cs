@@ -11,7 +11,7 @@ public class BallManager : MonoBehaviour
     private void Start()
     {
         ballRb = GetComponent<Rigidbody>();
-        Vector3 startVector = Vector3.down * ballSpeed;
+        Vector3 startVector = Vector3.up * ballSpeed;
         ballRb.AddForce(startVector);
     }
 
@@ -19,5 +19,17 @@ public class BallManager : MonoBehaviour
     {
         ballRb = GetComponent<Rigidbody>();
         ballRb.velocity = ballRb.velocity.normalized * ballSpeed;
+    }
+
+    public float GetBallSpeed()
+    {
+        return ballSpeed;
+    }
+
+    public void ResetBallPhysics()
+    {
+        ballRb.velocity = Vector3.zero;
+        Vector3 startVector = Vector3.up * ballSpeed;
+        ballRb.AddForce(startVector);
     }
 }

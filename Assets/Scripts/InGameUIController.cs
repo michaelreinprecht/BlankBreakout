@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class InGameUIScript : MonoBehaviour
+public class InGameUIController: MonoBehaviour
 {
     [SerializeField]
     private TMP_Text livesTextInfo;

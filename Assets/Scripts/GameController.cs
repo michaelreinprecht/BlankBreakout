@@ -13,29 +13,25 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private PaddleController paddle;
     [SerializeField]
-    private Canvas inGameUiScreen;
-    [SerializeField]
     private Canvas gameOverScreen;
-
-        private InGameUIScript inGameUIScript;
+    [SerializeField]
+    private InGameUIController inGameUIController;
 
     // Start is called before the first frame update
     void Start()
     {
         SpawnNewBall();
-        inGameUiScreen = Instantiate(inGameUiScreen);
-        inGameUIScript = inGameUiScreen.GetComponentInChildren<InGameUIScript>();
         //InvokeRepeating("CheckForEndOfGame", 20, 3);
     }
 
     // Update is called once per frame
     void Update()
     {
-        inGameUIScript.UpdateLives(lives);
+        inGameUIController.UpdateLives(lives);
 
         if (lives <= 0)
         {
-            Instantiate(gameOverScreen);
+            gameOverScreen.GetComponent<Canvas>().enabled = true;
             Time.timeScale = 0;
         }
     }
@@ -50,6 +46,8 @@ public class GameController : MonoBehaviour
         if (GameObject.FindGameObjectWithTag("Ball"))
         {
             GameObject.FindGameObjectWithTag("Ball").transform.position = ballStartPosition;
+            BallManager ballManager = GameObject.FindGameObjectWithTag("Ball").GetComponent<BallManager>();
+            ballManager.ResetBallPhysics();
         } else
         {
             Instantiate(ballPrefab, ballStartPosition, Quaternion.identity);
