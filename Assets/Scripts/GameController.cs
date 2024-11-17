@@ -1,7 +1,6 @@
-using GLTFast;
-using Unity.VisualScripting.Antlr3.Runtime;
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class GameController : MonoBehaviour
 {
@@ -33,6 +32,10 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private int minimumBrickNumber = 1;
 
+    //Melih: FOR Testing
+    private List<int> targets = new() { 2, 4, 8, 6 };
+    private List<int> nonTargets = new() { 2, 4, 8, 6 };
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +49,8 @@ public class GameController : MonoBehaviour
     void Update()
     {
         inGameUIController.UpdateLives(lives);
+        inGameUIController.UpdateTarget(targets);
+        inGameUIController.UpdateNonTarget(nonTargets);
 
         if (lives <= 0)
         {

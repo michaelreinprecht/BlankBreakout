@@ -1,13 +1,27 @@
-using TMPro;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InGameUIController: MonoBehaviour
 {
     [SerializeField]
-    private TMP_Text livesTextInfo;
+    private HeartsManager heartsManager;
+    [SerializeField]
+    private TargetManager targetManager;
+    [SerializeField]
+    private TargetManager nonTargetManager;
 
     public void UpdateLives(int lives)
     {
-        livesTextInfo.text = "Lives: " + lives.ToString();
+        heartsManager.UpdateHearts(lives);
+    }
+
+    public void UpdateTarget(List<int> numbers)
+    {
+        targetManager.UpdateTargets(numbers);
+    }
+
+    public void UpdateNonTarget(List<int> numbers)
+    {
+        nonTargetManager.UpdateTargets(numbers);
     }
 }
