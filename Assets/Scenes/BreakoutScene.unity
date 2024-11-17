@@ -591,6 +591,135 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1920440963}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &823714063
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 823714065}
+  - component: {fileID: 823714064}
+  m_Layer: 0
+  m_Name: MusicManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &823714064
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823714063}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: c890eeef0871b5a46b2bef7926b5ec0a, type: 3}
+  m_Resource: {fileID: 8300000, guid: c890eeef0871b5a46b2bef7926b5ec0a, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.4
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &823714065
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823714063}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &882655562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,7 +1200,7 @@ MonoBehaviour:
   ballStartPosition: {x: 0, y: -2.5, z: 0}
   paddleStartPosition: {x: 0, y: 0, z: 0}
   paddle: {fileID: 602180792}
-  gameOverScreen: {fileID: 6550842813847986719, guid: 4b853cb9c283acd46968b33a4e9431ff, type: 3}
+  gameOverScreen: {fileID: 5362653280870415708}
   inGameUIController: {fileID: 9004497512326310940}
   brickAPrefab: {fileID: 5482137910447832529, guid: 4fe2df34a4167a3479759f408e50546f, type: 3}
   brickBPrefab: {fileID: 0}
@@ -1537,6 +1666,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1676581201860054259, guid: 4b853cb9c283acd46968b33a4e9431ff, type: 3}
   m_PrefabInstance: {fileID: 5048252787030107885}
   m_PrefabAsset: {fileID: 0}
+--- !u!223 &5362653280870415708 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 7180532657107508455, guid: 4b853cb9c283acd46968b33a4e9431ff, type: 3}
+  m_PrefabInstance: {fileID: 5048252787030107885}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6807231949345448504 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7443178663664661317, guid: 783246ecdebd22a439b82bb3a8ab0634, type: 3}
@@ -1564,5 +1698,6 @@ SceneRoots:
   - {fileID: 1920440963}
   - {fileID: 1274567390}
   - {fileID: 1990393630}
+  - {fileID: 823714065}
   - {fileID: 1227954001}
   - {fileID: 1956945076}
