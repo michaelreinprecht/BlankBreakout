@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -43,25 +44,34 @@ public class GameController : MonoBehaviour
         SpawnAllBricks();
         //InvokeRepeating("CheckForEndOfGame", 20, 3);
         InvokeRepeating("CheckForLowBrickNumber", 20, 3);
+        Time.timeScale = 1;
+        InitInGameUIController();
+    }
+
+    public void InitInGameUIController()
+    {
+        inGameUIController.SetLives(lives);
+        inGameUIController.AllLivesLost += GameOver;
+        inGameUIController.SetTargets(targets);
+        inGameUIController.SetNonTargets(nonTargets);
+        //inGameUIController.TargetsCleared += todo;
+        inGameUIController.NonTargetCleared += GameOver;
     }
 
     // Update is called once per frame
     void Update()
     {
-        inGameUIController.UpdateLives(lives);
-        inGameUIController.UpdateTarget(targets);
-        inGameUIController.UpdateNonTarget(nonTargets);
+    }
 
-        if (lives <= 0)
-        {
-            gameOverScreen.GetComponent<Canvas>().enabled = true;
-            Time.timeScale = 0;
-        }
+    public void GameOver()
+    {
+        gameOverScreen.GetComponent<Canvas>().enabled = true;
+        Time.timeScale = 0;
     }
 
     public void LooseALife()
     {
-        lives--;
+        inGameUIController.RemoveLive();
     }
 
     public void ResetBall()

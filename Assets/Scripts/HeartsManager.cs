@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class HeartsManager : MonoBehaviour
@@ -7,26 +8,42 @@ public class HeartsManager : MonoBehaviour
     [SerializeField]
     public GameObject MissingHeartPrefab;
 
-    public int? numberOfHearts;
+    public int numberOfMaxHearts;
+    public int numberOfHearts;
+    public Action AllLivesLost;
 
-    public void UpdateHearts(int numberOfRemainingHearts)
+    public void SetHearts(int numberOfHearts)
     {
-        if (numberOfHearts == null)
-        {
-            numberOfHearts = numberOfRemainingHearts;
-        }
+        this.numberOfMaxHearts = numberOfHearts;
+        this.numberOfHearts = numberOfHearts;
 
+        UpdateUi();
+    }
+
+    public void RemoveHeart()
+    {
+        numberOfHearts--;
+        UpdateUi();
+        
+        if (numberOfHearts == 0)
+        {
+            AllLivesLost.Invoke();
+        }
+    }
+
+    private void UpdateUi()
+    {
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
         }
 
-        for (int i = 0; i < numberOfRemainingHearts; i++)
+        for (int i = 0; i < numberOfHearts; i++)
         {
             Instantiate(fullHeartPrefab, transform);
         }
 
-        for (int i = numberOfRemainingHearts; i < numberOfHearts; i++)
+        for (int i = numberOfHearts; i < numberOfMaxHearts; i++)
         {
             Instantiate(MissingHeartPrefab, transform);
         }
