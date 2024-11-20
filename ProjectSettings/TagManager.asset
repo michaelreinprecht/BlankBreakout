@@ -12,6 +12,7 @@ TagManager:
   - BrickC
   - Ball
   - Brick
+  - MathOperation
   layers:
   - Default
   - TransparentFX
