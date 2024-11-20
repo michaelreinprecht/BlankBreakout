@@ -1,13 +1,33 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PaddleController : MonoBehaviour
 {
-    [SerializeField] private float paddleSpeed = 10f;
-    [SerializeField] private float xPosMin = -6.6f;
-    [SerializeField] private float xPosMax = 6.6f;
+    [SerializeField] 
+    private float paddleSpeed = 10f;
+    [SerializeField] 
+    private float xPosMin = -6.8f;
+    [SerializeField] 
+    private float xPosMax = 6.6f;
+    [SerializeField] 
+    private TMP_Text textObject;
+
+    //TODO Change this value so the gameManager checks if a target is reached
+    private int value;
+    public Action ValueChanged;
+
+    public void SetValue(int startingValue)
+    {
+        value = startingValue;
+        SetContent(value);
+    }
+
+    public int GetValue()
+    {
+        return value;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -34,11 +54,11 @@ public class PaddleController : MonoBehaviour
         if (ballRb != null )
         {
             //Get the exact point where the ball hit the paddle
-            Vector3 hitpoint = collision.contacts[0].point;
+            Vector3 hitPoint = collision.contacts[0].point;
 
-            float hitfactor = (hitpoint.x - transform.position.x) / transform.localScale.x;
+            float hitFactor = (hitPoint.x - transform.position.x) / transform.localScale.x;
 
-            Vector3 paddleDirection = new Vector3(hitfactor, 1, 0).normalized;
+            Vector3 paddleDirection = new Vector3(hitFactor, 1, 0).normalized;
             Vector3 existingDirection = ballRb.velocity.normalized;
 
             float blendFactor = 0.5f; // 50% new direction, 50% existing direction
@@ -48,5 +68,10 @@ public class PaddleController : MonoBehaviour
             // Set the new velocity, keeping the ball speed constant
             ballRb.velocity = combinedDirection * ballRb.velocity.magnitude;
         }
+    }
+
+    private void SetContent(int number)
+    {
+        textObject.text = number.ToString();
     }
 }

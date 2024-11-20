@@ -10,7 +10,15 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        GameObject controllerObject = GameObject.Find("GameController");
+        if (controllerObject != null) //Fixed a bug for Melih, where game would crash if ball collided for the first time with a brick
+        {
+            gameController = controllerObject.GetComponent<GameController>();
+        }
+        else
+        {
+            Debug.LogError("GameController not found in the scene!");
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
