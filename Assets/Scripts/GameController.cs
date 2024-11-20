@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -6,11 +8,15 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private int lives = 3;
     [SerializeField]
-    private List<ArithmeticOperations> operations = new() { ArithmeticOperations.Plus, ArithmeticOperations.Minus};
+    private List<MathOperatorsEnum> useOperation = new() { MathOperatorsEnum.ADDITION, MathOperatorsEnum.SUBTRACTION};
     [SerializeField]
     private int maxBrickValue = 10;
     [SerializeField] 
     private int paddleValue = 1;
+    [SerializeField]
+    private int numberOfTargets = 3;
+    [SerializeField]
+    private int numberOfNonTargets = 3;
     [SerializeField]
     private GameObject ballPrefab;
     [SerializeField]
@@ -37,10 +43,6 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private int minimumBrickNumber = 1;
 
-    //Melih: FOR Testing
-    private List<int> targets = new() { 2, 4, 8, 6 };
-    private List<int> nonTargets = new() { 2, 4, 8, 6 };
-
     // Start is called before the first frame update
     void Start()
     {
@@ -48,17 +50,22 @@ public class GameController : MonoBehaviour
         SpawnAllBricks();
         //InvokeRepeating("CheckForEndOfGame", 20, 3);
         InvokeRepeating("CheckForLowBrickNumber", 20, 3);
+        InitGameObjects();
         InitInGameUIController();
-        paddle.SetContent(paddleValue);
+
         Time.timeScale = 1;
+    }
+
+    public void InitGameObjects()
+    {
+        paddle.SetValue(paddleValue);
+        paddle.ValueChanged += CheckTargets;
     }
 
     public void InitInGameUIController()
     {
         inGameUIController.SetLives(lives);
         inGameUIController.AllLivesLost += GameOver;
-        inGameUIController.SetTargets(targets);
-        inGameUIController.SetNonTargets(nonTargets);
         //inGameUIController.TargetsCleared += todo;
         inGameUIController.NonTargetCleared += GameOver;
     }
@@ -66,6 +73,12 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public void CheckTargets()
+    {
+        inGameUIController.ContainsTarget(paddle.GetValue());
+        inGameUIController.ContainsNonTarget(paddle.GetValue());
     }
 
     public void GameOver()
@@ -115,12 +128,67 @@ public class GameController : MonoBehaviour
     public void SpawnAllBricks()
     {
         //TODO change prefabs for different brick rows and types (e.g. for powerups)
+        List<DtoTerm> allTerms = new();
         for (int i = 0; i < brickRows; i++)
         {
             for (int j = 0; j < brickColumns; j++)
             {
-                Instantiate(brickAPrefab, new Vector3((j*2.5f)-6.5f, (i*1.1f)-2.8f, 0), Quaternion.identity);
+                GameObject prefabInstance = Instantiate(brickAPrefab, new Vector3((j*2.5f)-6.5f, (i*1.1f)-2.8f, 0), Quaternion.identity);
+                Brick script = prefabInstance.GetComponent<Brick>();
+                var term = script.SetBrickMathValue(maxBrickValue, useOperation);
+                allTerms.Add(term);
             }
         }
+
+        CalculateTargets(allTerms);
+    }
+
+    //maybe move some parts of this code out of this class
+    public void CalculateTargets(List<DtoTerm> allTerms)
+    {
+        List<int> targets = new();
+
+        int calculateTarget = paddleValue;
+        while (targets.Count != numberOfTargets)
+        {
+            int termLength = Random.Range(2, 4); //To reach next target you ideally need 2 or 3 bricks 
+
+            for (int i = 0; i < termLength; i++)
+            {
+                int operationIndex = Random.Range(0, allTerms.Count);
+                DtoTerm term = allTerms[operationIndex];
+                allTerms.Remove(term);
+
+                switch (term.MathOperator)
+                {
+                    case MathOperatorsEnum.SUBTRACTION:
+                        calculateTarget -= term.Value;
+                        break;
+                    case MathOperatorsEnum.ADDITION:
+                        calculateTarget += term.Value;
+                        break;
+                    case MathOperatorsEnum.MULTIPLICATION:
+                        calculateTarget *= term.Value;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            targets.Add(calculateTarget);
+        }
+
+        List<int> nonTargets = new();
+        while (nonTargets.Count != numberOfNonTargets)
+        {
+            int randomNonTarget = Random.Range(targets.Min(), targets.Max() + 1);
+
+            if (!targets.Contains(randomNonTarget))
+            {
+                nonTargets.Add(randomNonTarget);
+            }
+        }
+
+        inGameUIController.SetTargets(targets);
+        inGameUIController.SetNonTargets(nonTargets);
     }
 }

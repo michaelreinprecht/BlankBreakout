@@ -1,9 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using TMPro;
+using System.Collections.Generic;
 
 public class Brick : MonoBehaviour
 {
@@ -23,20 +22,14 @@ public class Brick : MonoBehaviour
     private TextMeshPro mathValueTextBrick;
     
     public bool IsPowerUp = false; //might need for adding powerups ...
-    private int currentHitpoints;
+    private int currentHitPoints;
     private int mathValue;
     private string mathOperator;
 
-
-    private enum MathOperatorsEnum
-    {
-        SUBTRACTION = 0,
-        ADDITION = 1,
-    }
     // Start is called before the first frame update
-    void Start()
+    public DtoTerm SetBrickMathValue(int maxValue, List<MathOperatorsEnum> validOperations)
     {
-        MathOperatorsEnum randomOperator = (MathOperatorsEnum)UnityEngine.Random.Range(0, 2);
+        MathOperatorsEnum randomOperator = (MathOperatorsEnum)validOperations[UnityEngine.Random.Range(0, validOperations.Count)];
         switch (randomOperator)
         {
             case MathOperatorsEnum.SUBTRACTION:
@@ -45,13 +38,18 @@ public class Brick : MonoBehaviour
             case MathOperatorsEnum.ADDITION:
                 mathOperator = "+";
                 break;
+            case MathOperatorsEnum.MULTIPLICATION:
+                mathOperator = "*";
+                break;
             default:
                 mathOperator = "+";
                 break;
         }
-        currentHitpoints = hitPoints;
-        mathValue = UnityEngine.Random.Range(1, 9);
-        mathValueTextBrick.text = mathOperator + mathValue.ToString();        
+        currentHitPoints = hitPoints;
+        mathValue = UnityEngine.Random.Range(1, maxValue);
+        mathValueTextBrick.text = mathOperator + mathValue.ToString();
+
+        return new DtoTerm() { MathOperator = randomOperator, Value = mathValue };
     }
 
     //Add force to ball when reflecting form brick if needed and invoke callback with damage number
@@ -66,10 +64,10 @@ public class Brick : MonoBehaviour
     //Handle damage brick is taking and initiate destruction if needed
     public void TakeDamage(int damage)
     {
-        currentHitpoints -= damage;
+        currentHitPoints -= damage;
 
         //destroy brick on 0 health
-        if (currentHitpoints <= 0) {
+        if (currentHitPoints <= 0) {
             HandleDestruction();
             return;
         }
@@ -116,7 +114,6 @@ public class Brick : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision!");
         if (collision.gameObject.CompareTag("Ball"))
         {
             ReflectBall(collision, (result) =>

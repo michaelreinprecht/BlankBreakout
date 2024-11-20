@@ -288,7 +288,6 @@ MonoBehaviour:
   paddleSpeed: 30
   xPosMin: -6.8
   xPosMax: 6.6
-  paddleValue: 1
   textObject: {fileID: 6942699605336265338}
 --- !u!1 &7921894963778457348
 GameObject:
