@@ -1,12 +1,16 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
     [SerializeField]
     private int lives = 3;
+    [SerializeField]
+    private List<ArithmeticOperations> operations = new() { ArithmeticOperations.Plus, ArithmeticOperations.Minus};
+    [SerializeField]
+    private int maxBrickValue = 10;
+    [SerializeField] 
+    private int paddleValue = 1;
     [SerializeField]
     private GameObject ballPrefab;
     [SerializeField]
@@ -44,8 +48,9 @@ public class GameController : MonoBehaviour
         SpawnAllBricks();
         //InvokeRepeating("CheckForEndOfGame", 20, 3);
         InvokeRepeating("CheckForLowBrickNumber", 20, 3);
-        Time.timeScale = 1;
         InitInGameUIController();
+        paddle.SetContent(paddleValue);
+        Time.timeScale = 1;
     }
 
     public void InitInGameUIController()

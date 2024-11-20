@@ -1,13 +1,13 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PaddleController : MonoBehaviour
 {
     [SerializeField] private float paddleSpeed = 10f;
-    [SerializeField] private float xPosMin = -6.6f;
+    [SerializeField] private float xPosMin = -6.8f;
     [SerializeField] private float xPosMax = 6.6f;
+    [SerializeField] private TMP_Text textObject;
+
     // Update is called once per frame
     void Update()
     {
@@ -48,5 +48,10 @@ public class PaddleController : MonoBehaviour
             // Set the new velocity, keeping the ball speed constant
             ballRb.velocity = combinedDirection * ballRb.velocity.magnitude;
         }
+    }
+
+    public void SetContent(int number)
+    {
+        textObject.text = number.ToString();
     }
 }
