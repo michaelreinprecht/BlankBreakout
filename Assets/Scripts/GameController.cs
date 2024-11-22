@@ -129,11 +129,14 @@ public class GameController : MonoBehaviour
     {
         //TODO change prefabs for different brick rows and types (e.g. for powerups)
         List<DtoTerm> allTerms = new();
+        GameObject prefab = brickAPrefab;
         for (int i = 0; i < brickRows; i++)
         {
+            if (i == 1) prefab = brickBPrefab;
+            if (i == 2) prefab = brickCPrefab;
             for (int j = 0; j < brickColumns; j++)
             {
-                GameObject prefabInstance = Instantiate(brickAPrefab, new Vector3((j*2.5f)-6.5f, (i*1.1f)-2.8f, 0), Quaternion.identity);
+                GameObject prefabInstance = Instantiate(prefab, new Vector3((j*2.5f)-6.5f, (i*1.1f)+1.0f, 0), Quaternion.identity);
                 Brick script = prefabInstance.GetComponent<Brick>();
                 var term = script.SetBrickMathValue(maxBrickValue, useOperation);
                 allTerms.Add(term);

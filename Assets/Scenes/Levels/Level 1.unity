@@ -838,9 +838,9 @@ MonoBehaviour:
   paddle: {fileID: 1519479601}
   gameOverScreen: {fileID: 4323616992632611316}
   inGameUIController: {fileID: 1092561016857614823}
-  brickAPrefab: {fileID: 5482137910447832529, guid: 4fe2df34a4167a3479759f408e50546f, type: 3}
-  brickBPrefab: {fileID: 0}
-  brickCPrefab: {fileID: 0}
+  brickAPrefab: {fileID: 1443159193780345179, guid: 4058a48d0068cfa41a81d9d6cf21881b, type: 3}
+  brickBPrefab: {fileID: 1443159193780345179, guid: 3ee29458aa875854385b2269ddd7fd38, type: 3}
+  brickCPrefab: {fileID: 1443159193780345179, guid: e06bdff80111d3e49bd0d529e02c6f30, type: 3}
   brickRows: 3
   brickColumns: 6
   minimumBrickNumber: 1
