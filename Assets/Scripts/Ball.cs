@@ -1,11 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class Ball : MonoBehaviour
 {
     [SerializeField]
     private GameController gameController;
+    [SerializeField]
+    private PlayableDirector bottomCollisionDirector;
+    [SerializeField]
+    private PlayableDirector topCollisionDirector;
+    [SerializeField]
+    private PlayableDirector rightCollisionDirector;
+    [SerializeField]
+    private PlayableDirector leftCollisionDirector;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +32,8 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        PlayCollisionAnimation(collision);
+
         if (collision.gameObject.CompareTag("Paddle"))
         {
             SoundManager.Instance.PlaySound("PaddleHit");
@@ -34,6 +45,29 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.CompareTag("Border"))
         {
             SoundManager.Instance.PlaySound("WallHit");
+        }
+    }
+
+    private void PlayCollisionAnimation(Collision collision)
+    {
+        Vector3 collisionNormal = collision.contacts[0].normal;
+
+        float absX = Mathf.Abs(collisionNormal.x);
+        float absY = Mathf.Abs(collisionNormal.y);
+
+        if (absY > absX) //Vertical collision
+        {
+            if (collisionNormal.y > 0) // Bottom collision
+                bottomCollisionDirector.Play();
+            else if (collisionNormal.y < 0) // Top collision
+                topCollisionDirector.Play();
+        }
+        else
+        { //Horizontal collision
+            if (collisionNormal.x < 0) // Right collision
+                rightCollisionDirector.Play();
+            else if (collisionNormal.x > 0) // Left collision
+                leftCollisionDirector.Play();
         }
     }
 
