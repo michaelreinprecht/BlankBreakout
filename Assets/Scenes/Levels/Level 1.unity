@@ -832,7 +832,7 @@ MonoBehaviour:
   paddleValue: 1
   numberOfTargets: 4
   numberOfNonTargets: 2
-  ballPrefab: {fileID: 1086190341790600273, guid: 7b5f48c3535c286419d93690b2fc5ba9, type: 3}
+  ballPrefab: {fileID: 6857813574364753501, guid: 7b5f48c3535c286419d93690b2fc5ba9, type: 3}
   ballStartPosition: {x: 0, y: -2.5, z: 0}
   paddleStartPosition: {x: 0, y: 0, z: 0}
   paddle: {fileID: 1519479601}

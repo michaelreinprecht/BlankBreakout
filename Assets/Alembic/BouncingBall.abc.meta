@@ -26,13 +26,13 @@ ScriptedImporter:
     importXform: 1
     importCameras: 1
     importMeshes: 1
-    importPoints: 0
+    importPoints: 1
     importCurves: 1
-    createCurveRenderers: 0
+    createCurveRenderers: 1
   abcStartTime: 0
-  abcEndTime: 1.2
+  abcEndTime: 4.8
   startTime: 0
-  endTime: 1.2
+  endTime: 4.8
   importWarning: 
   firstImport: 0
   isHDF5: 0
