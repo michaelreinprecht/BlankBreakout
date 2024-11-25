@@ -49,7 +49,7 @@ PlayableDirector:
   m_SceneBindings: []
   m_ExposedReferences:
     m_References:
-    - a9b8cced566ccf1489ea71cce9684cf9: {fileID: 5829325256481289924}
+    - a9b8cced566ccf1489ea71cce9684cf9: {fileID: -3008686386980633080}
 --- !u!1 &4033416136726852283
 GameObject:
   m_ObjectHideFlags: 0
@@ -99,7 +99,7 @@ PlayableDirector:
   m_SceneBindings: []
   m_ExposedReferences:
     m_References:
-    - ff490764331ec2145b1339e2b9c97ff7: {fileID: 5829325256481289924}
+    - ff490764331ec2145b1339e2b9c97ff7: {fileID: -3008686386980633080}
 --- !u!1 &4367373351999936892
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,7 +149,7 @@ PlayableDirector:
   m_SceneBindings: []
   m_ExposedReferences:
     m_References:
-    - 9517e5fab93ff0347af0d1324c521880: {fileID: 5829325256481289924}
+    - 9517e5fab93ff0347af0d1324c521880: {fileID: -3008686386980633080}
 --- !u!1 &7305106495351836751
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +199,7 @@ PlayableDirector:
   m_SceneBindings: []
   m_ExposedReferences:
     m_References:
-    - bb4fc28e347b94742917abd59fc51eaf: {fileID: 5829325256481289924}
+    - bb4fc28e347b94742917abd59fc51eaf: {fileID: -3008686386980633080}
 --- !u!1001 &7867341474219096481
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -218,7 +218,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7528047593574765648, guid: 2f7fc92f8665f5c45ac36a0aaa9d22c3, type: 3}
       propertyPath: m_Materials.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7528047593574765648, guid: 2f7fc92f8665f5c45ac36a0aaa9d22c3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -334,7 +334,7 @@ PrefabInstance:
       addedObject: {fileID: 7916680766325666591}
     - targetCorrespondingSourceObject: {fileID: -5618890896904153092, guid: 2f7fc92f8665f5c45ac36a0aaa9d22c3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5829325256481289924}
+      addedObject: {fileID: -3008686386980633080}
   m_SourcePrefab: {fileID: -2374881230940996564, guid: 2f7fc92f8665f5c45ac36a0aaa9d22c3, type: 3}
 --- !u!4 &173528000804398627 stripped
 Transform:
@@ -392,7 +392,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 56
+  m_Constraints: 120
   m_CollisionDetection: 1
 --- !u!114 &-6278436491391927028
 MonoBehaviour:
@@ -406,7 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eab2e7bcb88a0d34e844c201d201068a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballSpeed: 10
+  ballSpeed: 8
 --- !u!114 &-6407413481819639245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,7 +539,7 @@ TrailRenderer:
   m_Autodestruct: 1
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
---- !u!114 &5829325256481289924
+--- !u!114 &-3008686386980633080
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -554,7 +554,7 @@ MonoBehaviour:
   streamSource: 1
   streamDescriptor: {fileID: 0}
   embeddedStreamDescriptor:
-    pathToAbc: C:/Users/Zechs/Documents/FHV/5. Semester/Computergrafiken/alembic/BouncingBallNew.abc
+    pathToAbc: Assets/Alembic/BouncingBallNew.abc
     settings:
       normals: 1
       tangents: 1
@@ -570,9 +570,9 @@ MonoBehaviour:
       importXform: 1
       importCameras: 1
       importMeshes: 1
-      importPoints: 1
+      importPoints: 0
       importCurves: 1
-      createCurveRenderers: 1
+      createCurveRenderers: 0
     mediaStartTime: 0
     mediaEndTime: 4.8
   startTime: 0
