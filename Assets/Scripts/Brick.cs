@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using TMPro;
 using System.Collections.Generic;
+using System.Collections;
 
 public class Brick : MonoBehaviour
 {
@@ -20,11 +21,19 @@ public class Brick : MonoBehaviour
     private PlayableDirector director;
     [SerializeField]
     private TextMeshPro mathValueTextBrick;
-    
-    public bool IsPowerUp = false; //might need for adding powerups ...
+
+    private bool isPowerUp;
     private int currentHitPoints;
     private int mathValue;
     private string mathOperator;
+
+    public void SetIsPowerup(int chance)
+    {
+        if (UnityEngine.Random.Range(0, 100) <= chance)
+        {
+            isPowerUp = true;
+        }
+    }
 
     // Start is called before the first frame update
     public DtoTerm SetBrickMathValue(int maxValue, List<MathOperatorsEnum> validOperations)
@@ -76,15 +85,13 @@ public class Brick : MonoBehaviour
     public void HandleDestruction()
     {
         //TODO drop terms or powerups ...
-        if (IsPowerUp)
+        if (isPowerUp)
         {
             DropPowerUp();
         }
-        else
-        {
-            DropMathTerm();
-        }
-
+        
+        DropMathTerm();
+        
         if (brickCollider)
         {
             brickCollider.enabled = false; //deactivate collider once brick is destroyed
@@ -104,8 +111,29 @@ public class Brick : MonoBehaviour
 
     private void DropPowerUp()
     {
-        //TODO
+        GameObject powerUp = PowerupManager.Instance.GetRandomPowerup();
+        if (powerUp == null)
+        {
+            return;
+        }
+
+        GameObject powerUpInstance = Instantiate(powerUp, transform.position, Quaternion.identity);
+        Rigidbody powerUpRb = powerUpInstance.GetComponent<Rigidbody>();
+    
+        if (powerUpRb != null)
+        {
+            Vector3 randomDirection = new Vector3(
+                UnityEngine.Random.Range(-1f, 1f),
+                1f,
+                UnityEngine.Random.Range(-1f, 1f)
+            ).normalized;
+
+            powerUpRb.AddForce(randomDirection * 3f, ForceMode.Impulse);
+        }
+
+        StartCoroutine(EnableGravityAfterDelay(powerUpInstance, 0.5f));
     }
+
 
     private void DropMathTerm()
     {
@@ -120,6 +148,17 @@ public class Brick : MonoBehaviour
             {
                 TakeDamage(result);
             });
+        }
+    }
+
+    private IEnumerator EnableGravityAfterDelay(GameObject powerUpInstance, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        Rigidbody powerUpRb = powerUpInstance.GetComponent<Rigidbody>();
+        if (powerUpRb != null)
+        {
+            powerUpRb.useGravity = true;
         }
     }
 }

@@ -18,6 +18,10 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private int numberOfNonTargets = 3;
     [SerializeField]
+    private int powerupChance = 20;
+    [SerializeField]
+    private List<GameObject> usePowerup = new();
+    [SerializeField]
     private GameObject ballPrefab;
     [SerializeField]
     private Vector3 ballStartPosition;
@@ -52,6 +56,7 @@ public class GameController : MonoBehaviour
         InvokeRepeating("CheckForLowBrickNumber", 20, 3);
         InitGameObjects();
         InitInGameUIController();
+        PowerupManager.Instance.SetPowerups(usePowerup);
 
         Time.timeScale = 1;
     }
@@ -138,6 +143,7 @@ public class GameController : MonoBehaviour
             {
                 GameObject prefabInstance = Instantiate(prefab, new Vector3((j*2.5f)-6.5f, (i*1.1f)+1.0f, 0), Quaternion.identity);
                 Brick script = prefabInstance.GetComponent<Brick>();
+                script.SetIsPowerup(powerupChance);
                 var term = script.SetBrickMathValue(maxBrickValue, useOperation);
                 allTerms.Add(term);
             }

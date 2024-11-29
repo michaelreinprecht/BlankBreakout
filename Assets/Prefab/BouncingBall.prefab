@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 703503379307413475}
   - component: {fileID: 5137984451656315497}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BounceBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6157511447513016291}
   - component: {fileID: 6520108486373547649}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BounceRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2815460897517929077}
   - component: {fileID: 3420714327033643108}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BounceLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7850198077624504642}
   - component: {fileID: 6583242335746853130}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BounceTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,8 +233,20 @@ PrefabInstance:
       value: BouncingBall
       objectReference: {fileID: 0}
     - target: {fileID: -5618890896904153092, guid: 2f7fc92f8665f5c45ac36a0aaa9d22c3, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -5618890896904153092, guid: 2f7fc92f8665f5c45ac36a0aaa9d22c3, type: 3}
       propertyPath: m_TagString
       value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 3290254229260623084, guid: 2f7fc92f8665f5c45ac36a0aaa9d22c3, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7936603377503789677, guid: 2f7fc92f8665f5c45ac36a0aaa9d22c3, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8018122228426170242, guid: 2f7fc92f8665f5c45ac36a0aaa9d22c3, type: 3}
       propertyPath: m_LocalScale.x

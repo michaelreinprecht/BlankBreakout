@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2596992192676051698}
   - component: {fileID: 3110712319963076427}
   - component: {fileID: 6583483188628207143}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MathOperation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 3772235533858838260}
   - component: {fileID: 4836363358705173420}
   - component: {fileID: 3855948648245809597}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DropDown_MathOperation
   m_TagString: DropDown_MathOperation
   m_Icon: {fileID: 0}

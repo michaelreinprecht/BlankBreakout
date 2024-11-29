@@ -1,11 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BallManager : MonoBehaviour
 {
-    [SerializeField] private float ballSpeed = 10f;
+    [SerializeField] 
+    private float ballSpeed = 10f;
     Rigidbody ballRb;
 
     private void Start()
@@ -24,6 +22,11 @@ public class BallManager : MonoBehaviour
     public float GetBallSpeed()
     {
         return ballSpeed;
+    }
+
+    public void UpdateBallSpeed(float factor)
+    {
+        ballSpeed *= factor;
     }
 
     public void ResetBallPhysics()

@@ -77,19 +77,11 @@ public class PaddleController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-            Debug.Log("hit " + other.tag);
         if (other.CompareTag("DropDown_MathOperation"))
         {
-            Debug.Log("Math Operation Drop Down caught");
-            // Get the math value from the brick
             int value = int.Parse(other.GetComponent<DropDown_MathOp>().mathValue.text);
-
-            // Add the value to the current value
-            Debug.Log("NEW value: " + value);
-   
-            // Destroy the brick
+  
             Destroy(other.gameObject);
         }
     }
-
 }

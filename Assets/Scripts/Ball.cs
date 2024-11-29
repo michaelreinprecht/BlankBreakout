@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -45,7 +43,7 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.CompareTag("Border"))
         {
             SoundManager.Instance.PlaySound("WallHit");
-        }
+        }   
     }
 
     private void PlayCollisionAnimation(Collision collision)
