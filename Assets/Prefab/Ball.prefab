@@ -164,6 +164,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 0}
+  bottomCollisionDirector: {fileID: 0}
+  topCollisionDirector: {fileID: 0}
+  rightCollisionDirector: {fileID: 0}
+  leftCollisionDirector: {fileID: 0}
 --- !u!96 &3519343401485772545
 TrailRenderer:
   serializedVersion: 3
