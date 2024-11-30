@@ -74,7 +74,7 @@ public class Ball : MonoBehaviour
         if (other.gameObject.CompareTag("DeathZone"))
         {
             gameController.LooseALife();
-            gameController.ResetBall();
+            gameController.SetupBall();
         }
     }
 }

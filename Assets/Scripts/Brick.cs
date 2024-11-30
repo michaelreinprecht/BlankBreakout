@@ -105,8 +105,43 @@ public class Brick : MonoBehaviour
         {
             destructionParticles.Play();
         }
-        Destroy(gameObject, 4f); //Destroy game object after 4 seconds
         mathValueTextBrick.text = "";     
+        StartCoroutine(DeactivateBrickAfterDelay(1.5f));
+    }
+
+    private IEnumerator DeactivateBrickAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay); // Wait for the specified delay
+
+        // Now deactivate the brick after the delay
+        gameObject.SetActive(false);
+    }
+
+    public void ResetBrick(int maxMathValue, List<MathOperatorsEnum> validOperations, int isPowerupChance)
+    {
+        currentHitPoints = hitPoints; // Reset health
+        SetBrickMathValue(maxMathValue, validOperations);
+        SetIsPowerup(isPowerupChance);
+
+        // Reactivate collider and visuals
+        if (brickCollider) brickCollider.enabled = true;
+        if (destructionParticles) destructionParticles.Stop(); // Reset any visual effects
+                                                               // Reset the animation and ensure it's playing again
+        if (director)
+        {
+            director.Stop();            // Stop the director
+            director.time = 0;          // Set the director's time to the start
+            director.Evaluate();        // Ensure it updates immediately to the first frame
+            director.Play();            // Play the director (starts the animation again)
+        }
+
+        // Ensure the mesh renderer is enabled
+        Renderer brickRenderer = GetComponent<Renderer>();
+        if (brickRenderer)
+        {
+            brickRenderer.enabled = true; // Ensure the brick is visible
+        }
+        gameObject.SetActive(true); // Ensure the brick is visible
     }
 
     private void DropPowerUp()
