@@ -79,8 +79,28 @@ public class PaddleController : MonoBehaviour
     {
         if (other.CompareTag("DropDown_MathOperation"))
         {
-            int value = int.Parse(other.GetComponent<DropDown_MathOp>().mathValue.text);
-  
+            var mathOperator = other.GetComponent<DropDown_MathOp>().mathOperator;
+            int termValue = other.GetComponent<DropDown_MathOp>().mathValue;
+            Debug.Log("Caught number: operator: " + mathOperator + ", value: " + termValue);
+
+            switch (mathOperator)
+                {
+                    case "-":
+                        value -= termValue;
+                        break;
+                    case "+":
+                        value += termValue;
+                        break;
+                    case "*":
+                        value *= termValue;
+                        break;
+                    default:
+                        break;
+                }
+            textObject.text = value.ToString();
+            Debug.Log("Value On Paddle: " + textObject.text);
+   
+            // Destroy the brick
             Destroy(other.gameObject);
         }
     }

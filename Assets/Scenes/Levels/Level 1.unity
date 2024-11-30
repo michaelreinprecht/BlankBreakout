@@ -874,6 +874,7 @@ MonoBehaviour:
   brickRows: 3
   brickColumns: 6
   minimumBrickNumber: 1
+  dropDown_MathOpPrefab: {fileID: 9091978888525240204, guid: 769751377f4e35f4eb64e0a54f8e7bf7, type: 3}
 --- !u!4 &2054647232
 Transform:
   m_ObjectHideFlags: 0

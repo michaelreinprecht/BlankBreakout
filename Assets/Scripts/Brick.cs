@@ -26,6 +26,8 @@ public class Brick : MonoBehaviour
     private int currentHitPoints;
     private int mathValue;
     private string mathOperator;
+    private DropDown_MathOp linkedDropDown;
+    private Rigidbody rb;
 
     public void SetIsPowerup(int chance)
     {
@@ -137,7 +139,9 @@ public class Brick : MonoBehaviour
 
     private void DropMathTerm()
     {
-        //TODO
+        var rb = linkedDropDown.GetComponent<Rigidbody>();
+        rb.GetComponent<Rigidbody>().useGravity = true;
+        linkedDropDown.SetVisibility(true);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -160,5 +164,11 @@ public class Brick : MonoBehaviour
         {
             powerUpRb.useGravity = true;
         }
+    }   
+    public void LinkDropDown(DropDown_MathOp dropDown)
+    {
+        linkedDropDown = dropDown;
+        linkedDropDown.SetDropDownValue(mathOperator, mathValue);
+        linkedDropDown.transform.position = transform.position;
     }
 }

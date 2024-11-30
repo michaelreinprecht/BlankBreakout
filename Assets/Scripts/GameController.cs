@@ -46,6 +46,8 @@ public class GameController : MonoBehaviour
     private int brickColumns = 5;
     [SerializeField]
     private int minimumBrickNumber = 1;
+     [SerializeField]
+    private GameObject dropDown_MathOpPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -56,7 +58,7 @@ public class GameController : MonoBehaviour
         InvokeRepeating("CheckForLowBrickNumber", 20, 3);
         InitGameObjects();
         InitInGameUIController();
-        PowerupManager.Instance.SetPowerups(usePowerup);
+        PowerupManager.Instance.SetPowerups(usePowerup);  
 
         Time.timeScale = 1;
     }
@@ -135,16 +137,29 @@ public class GameController : MonoBehaviour
         //TODO change prefabs for different brick rows and types (e.g. for powerups)
         List<DtoTerm> allTerms = new();
         GameObject prefab = brickAPrefab;
+        GameObject dropDownPrefab = dropDown_MathOpPrefab;
         for (int i = 0; i < brickRows; i++)
         {
             if (i == 1) prefab = brickBPrefab;
             if (i == 2) prefab = brickCPrefab;
             for (int j = 0; j < brickColumns; j++)
             {
-                GameObject prefabInstance = Instantiate(prefab, new Vector3((j*2.5f)-6.5f, (i*1.1f)+1.0f, 0), Quaternion.identity);
-                Brick script = prefabInstance.GetComponent<Brick>();
-                script.SetIsPowerup(powerupChance);
-                var term = script.SetBrickMathValue(maxBrickValue, useOperation);
+                Vector3 brickPosition = new Vector3((j*2.5f)-6.5f, (i*1.1f)+1.0f, 0);
+                GameObject prefabInstance = Instantiate(prefab, brickPosition, Quaternion.identity);
+                Brick brickScript = prefabInstance.GetComponent<Brick>();
+                brickScript.SetIsPowerup(powerupChance);
+                var term = brickScript.SetBrickMathValue(maxBrickValue, useOperation);
+                
+                // Instantiate the math operation dropdown at the brick's position
+                GameObject dropDownInstance = Instantiate(dropDownPrefab, brickPosition, Quaternion.identity);
+                dropDownInstance.transform.SetParent(prefabInstance.transform, true); // keep world position
+                
+                DropDown_MathOp dropDownScript = dropDownInstance.GetComponent<DropDown_MathOp>();
+                dropDownInstance.transform.localPosition = brickPosition;
+                dropDownScript.SetVisibility(false);
+
+                brickScript.LinkDropDown(dropDownScript);
+
                 allTerms.Add(term);
             }
         }
