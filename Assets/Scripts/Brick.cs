@@ -45,6 +45,7 @@ public class Brick : MonoBehaviour
         currentHitPoints = hitPoints;
         mathValue = UnityEngine.Random.Range(1, maxValue);
         mathValueTextBrick.text = mathOperator.ToSymbol() + mathValue.ToString();
+        Debug.Log("BRICK.CS -- mathOperator: " + mathOperator);
 
         return new DtoTerm() { MathOperator = mathOperator, Value = mathValue };
     }
