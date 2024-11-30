@@ -226,6 +226,7 @@ GameObject:
   - component: {fileID: 1754811538366191738}
   - component: {fileID: 8725619532392773703}
   - component: {fileID: 5464506459199505316}
+  - component: {fileID: 7677008920640245819}
   m_Layer: 0
   m_Name: Border_Left
   m_TagString: Border
@@ -321,6 +322,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7677008920640245819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4655133783677781006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9403a91839b16d343b43cb34bd10efd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angleThreshold: 20
+  kickForce: 20
+  randomKickVariance: 10
 --- !u!1 &5464778674583342077
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,6 +384,7 @@ GameObject:
   - component: {fileID: 3054206419431402655}
   - component: {fileID: 2352060598703905304}
   - component: {fileID: 2659717668494737142}
+  - component: {fileID: 3442005212892971419}
   m_Layer: 0
   m_Name: Border_Right
   m_TagString: Border
@@ -463,3 +480,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3442005212892971419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7042598429026807941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9403a91839b16d343b43cb34bd10efd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angleThreshold: 0.1
+  kickForce: 2
+  randomKickVariance: 1
