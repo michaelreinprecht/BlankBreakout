@@ -10,7 +10,7 @@ public enum MathOperatorsEnum
 
 public static class MathOperatorsEnumExtensions
 {
-    public static string ToString(this MathOperatorsEnum mathOperator)
+    public static string ToSymbol(this MathOperatorsEnum mathOperator)
     {
         return mathOperator switch
         {

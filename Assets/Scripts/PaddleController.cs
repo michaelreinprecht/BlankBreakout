@@ -79,19 +79,22 @@ public class PaddleController : MonoBehaviour
     {
         if (other.CompareTag("DropDown_MathOperation"))
         {
-            var mathOperator = other.GetComponent<DropDown_MathOp>().mathOperator;
+            other.enabled = false; //  Disables the collider to prevent further interactions
+
+            Debug.Log($"Collision detected with {other.name} at {Time.time}");
+            MathOperatorsEnum mathOperator = other.GetComponent<DropDown_MathOp>().mathOperator;
             int termValue = other.GetComponent<DropDown_MathOp>().mathValue;
-            Debug.Log("Caught number: operator: " + mathOperator + ", value: " + termValue);
+            Debug.Log("Caught number: operator: " + mathOperator.ToSymbol() + ", value: " + termValue);
 
             switch (mathOperator)
                 {
-                    case "-":
+                    case MathOperatorsEnum.SUBTRACTION:
                         value -= termValue;
                         break;
-                    case "+":
+                    case MathOperatorsEnum.ADDITION:
                         value += termValue;
                         break;
-                    case "*":
+                    case MathOperatorsEnum.MULTIPLICATION:
                         value *= termValue;
                         break;
                     default:
@@ -100,7 +103,7 @@ public class PaddleController : MonoBehaviour
             textObject.text = value.ToString();
             Debug.Log("Value On Paddle: " + textObject.text);
    
-            // Destroy the brick
+            // Destroy the DropDown_MathOperation object
             Destroy(other.gameObject);
         }
     }

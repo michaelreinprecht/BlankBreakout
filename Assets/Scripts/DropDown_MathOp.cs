@@ -8,7 +8,7 @@ public class DropDown_MathOp : MonoBehaviour
     private Rigidbody rb;
     public TextMeshPro mathValueText;
     public int mathValue;
-    public string mathOperator;
+    public MathOperatorsEnum mathOperator;
     private Renderer dropDownRenderer;
 
 
@@ -34,11 +34,11 @@ public class DropDown_MathOp : MonoBehaviour
         
     }
 
-    public void SetDropDownValue(string brickMathOperator, int brickMathValue)
+    public void SetDropDownValue(MathOperatorsEnum brickMathOperator, int brickMathValue)
     {
         mathOperator = brickMathOperator;
         mathValue = brickMathValue;
-        mathValueText.text = mathOperator + mathValue.ToString();
+        mathValueText.text = mathOperator.ToSymbol() + mathValue.ToString();
     }
     
     public void SetVisibility(bool isVisible)
