@@ -973,7 +973,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1201884202535677365, guid: 4361c532872e38c44a8afa83f26d3b45, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.491
+      value: -0.505
+      objectReference: {fileID: 0}
+    - target: {fileID: 1201884202535677365, guid: 4361c532872e38c44a8afa83f26d3b45, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.068
       objectReference: {fileID: 0}
     - target: {fileID: 4253842713080213160, guid: 4361c532872e38c44a8afa83f26d3b45, type: 3}
       propertyPath: m_IsTrigger
@@ -1024,12 +1028,16 @@ PrefabInstance:
       value: Paddle
       objectReference: {fileID: 0}
     - target: {fileID: 6942699605336265338, guid: 4361c532872e38c44a8afa83f26d3b45, type: 3}
+      propertyPath: m_text
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942699605336265338, guid: 4361c532872e38c44a8afa83f26d3b45, type: 3}
       propertyPath: m_fontSize
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 6942699605336265338, guid: 4361c532872e38c44a8afa83f26d3b45, type: 3}
       propertyPath: m_fontSizeBase
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 7921894963778457348, guid: 4361c532872e38c44a8afa83f26d3b45, type: 3}
       propertyPath: m_IsActive
