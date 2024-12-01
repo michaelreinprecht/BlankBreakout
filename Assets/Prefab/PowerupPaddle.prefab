@@ -172,8 +172,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  value: 1.1
-  durationInSeconds: 10
+  value: 1.2
+  durationInSeconds: 5
+  stackable: 0
 --- !u!1 &5908400752941192285
 GameObject:
   m_ObjectHideFlags: 0
