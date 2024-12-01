@@ -27,12 +27,29 @@ public class Brick : MonoBehaviour
     private int mathValue;
     private string mathOperator;
 
+    private float scaleTimerMax = 1f;
+    private float scaleTimer = 1f;
+
     public void SetIsPowerup(int chance)
     {
         if (UnityEngine.Random.Range(0, 100) <= chance)
         {
             isPowerUp = true;
         }
+    }
+
+    private void Update()
+    {
+        if (scaleTimer < scaleTimerMax)
+        {
+            scaleTimer += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(Vector3.zero, new Vector3(0.5f, 0.5f, 0.5f), scaleTimer / scaleTimerMax);
+        }
+    }
+
+    private void ScaleInBrick()
+    {
+        scaleTimer = 0f;
     }
 
     // Start is called before the first frame update
@@ -142,6 +159,7 @@ public class Brick : MonoBehaviour
         {
             brickRenderer.enabled = true; // Ensure the brick is visible
         }
+        ScaleInBrick();
         gameObject.SetActive(true); // Ensure the brick is visible
     }
 
