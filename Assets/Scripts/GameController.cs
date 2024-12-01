@@ -157,7 +157,7 @@ public class GameController : MonoBehaviour
                 DropDown_MathOp dropDownScript = dropDownInstance.GetComponent<DropDown_MathOp>();
                 dropDownInstance.transform.localPosition = brickPosition;
                 dropDownScript.SetVisibility(false);
-
+                
                 brickScript.LinkDropDown(dropDownScript);
 
                 allTerms.Add(term);

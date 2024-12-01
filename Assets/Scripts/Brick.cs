@@ -40,7 +40,7 @@ public class Brick : MonoBehaviour
     // Start is called before the first frame update
     public DtoTerm SetBrickMathValue(int maxValue, List<MathOperatorsEnum> validOperations)
     {
-        MathOperatorsEnum mathOperator = (MathOperatorsEnum)validOperations[UnityEngine.Random.Range(0, validOperations.Count)];
+        this.mathOperator = (MathOperatorsEnum)validOperations[UnityEngine.Random.Range(0, validOperations.Count)];
         
         currentHitPoints = hitPoints;
         mathValue = UnityEngine.Random.Range(1, maxValue);

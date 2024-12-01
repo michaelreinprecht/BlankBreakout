@@ -39,8 +39,6 @@ public class DropDown_MathOp : MonoBehaviour
         mathOperator = brickMathOperator;
         mathValue = brickMathValue;
         mathValueText.text = brickMathOperator.ToSymbol() + mathValue.ToString();
-        Debug.Log("DropDown_MathOp -- mathOperator: " + mathOperator + ", mathValue: " + mathValue);
-        //TODO, this mathOperator is always Substraction
     }
     
     public void SetVisibility(bool isVisible)
