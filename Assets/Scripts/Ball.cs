@@ -38,6 +38,7 @@ public class Ball : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Paddle"))
         {
+            CinemachineShake.Instance.ShakeCamera(1f, .05f);
             SoundManager.Instance.PlaySound("PaddleHit", 0.4f);
             PaddleCollisionParticles.Play();
         }

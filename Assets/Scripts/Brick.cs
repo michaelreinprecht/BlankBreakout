@@ -97,6 +97,7 @@ public class Brick : MonoBehaviour
             brickCollider.enabled = false; //deactivate collider once brick is destroyed
         }
         SoundManager.Instance.PlaySound(destroySound, 1f);
+        CinemachineShake.Instance.ShakeCamera(5f, .1f);
         if (director)
         {
             director.Play();
