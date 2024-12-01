@@ -13,7 +13,6 @@ public class PaddleController : MonoBehaviour
     [SerializeField] 
     private TMP_Text textObject;
 
-    //TODO Change this value so the gameManager checks if a target is reached
     private int value;
     public Action ValueChanged;
 
@@ -81,29 +80,28 @@ public class PaddleController : MonoBehaviour
         {
             other.enabled = false; //  Disables the collider to prevent further interactions
 
-            Debug.Log($"Collision detected with {other.name} at {Time.time}");
             MathOperatorsEnum mathOperator = other.GetComponent<DropDown_MathOp>().mathOperator;
             int termValue = other.GetComponent<DropDown_MathOp>().mathValue;
-            Debug.Log("Caught number: operator: " + mathOperator.ToSymbol() + ", value: " + termValue);
-
+          
             switch (mathOperator)
                 {
                     case MathOperatorsEnum.SUBTRACTION:
                         value -= termValue;
+                        ValueChanged();
                         break;
                     case MathOperatorsEnum.ADDITION:
                         value += termValue;
+                        ValueChanged();
                         break;
                     case MathOperatorsEnum.MULTIPLICATION:
                         value *= termValue;
+                        ValueChanged();
                         break;
                     default:
                         break;
                 }
             textObject.text = value.ToString();
-            Debug.Log("Value On Paddle: " + textObject.text);
-   
-            // Destroy the DropDown_MathOperation object
+
             Destroy(other.gameObject);
         }
     }

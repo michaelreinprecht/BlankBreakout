@@ -45,7 +45,6 @@ public class Brick : MonoBehaviour
         currentHitPoints = hitPoints;
         mathValue = UnityEngine.Random.Range(1, maxValue);
         mathValueTextBrick.text = mathOperator.ToSymbol() + mathValue.ToString();
-        Debug.Log("BRICK.CS -- mathOperator: " + mathOperator);
 
         return new DtoTerm() { MathOperator = mathOperator, Value = mathValue };
     }
@@ -94,7 +93,7 @@ public class Brick : MonoBehaviour
         {
             destructionParticles.Play();
         }
-        Destroy(gameObject, 4f); //Destroy game object after 4 seconds
+        Destroy(gameObject, 5f); //Destroy game object after 4 seconds
         mathValueTextBrick.text = "";     
     }
 
@@ -122,7 +121,6 @@ public class Brick : MonoBehaviour
 
         StartCoroutine(EnableGravityAfterDelay(powerUpInstance, 0.5f));
     }
-
 
     private void DropMathTerm()
     {
@@ -152,6 +150,7 @@ public class Brick : MonoBehaviour
             powerUpRb.useGravity = true;
         }
     }   
+
     public void LinkDropDown(DropDown_MathOp dropDown)
     {
         linkedDropDown = dropDown;

@@ -858,7 +858,7 @@ MonoBehaviour:
   paddleValue: 1
   numberOfTargets: 4
   numberOfNonTargets: 2
-  powerupChance: 80
+  powerupChance: 10
   usePowerup:
   - {fileID: 3882633660276137872, guid: 8f0d110d3485ccc42882227c4d048746, type: 3}
   - {fileID: 3882633660276137872, guid: c6f84b7ec19226746baeac17b1982307, type: 3}

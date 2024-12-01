@@ -25,13 +25,6 @@ public class DropDown_MathOp : MonoBehaviour
         }
         //dropDownRenderer.enabled = false;
         SetVisibility(false);
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void SetDropDownValue(MathOperatorsEnum brickMathOperator, int brickMathValue)
@@ -52,5 +45,4 @@ public class DropDown_MathOp : MonoBehaviour
             mathValueText.enabled = isVisible;
         }
     }
-
 }
