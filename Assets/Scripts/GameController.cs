@@ -22,8 +22,6 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private List<GameObject> usePowerup = new();
     [SerializeField]
-    private GameObject ballPrefab;
-    [SerializeField]
     private Vector3 ballStartPosition;
     [SerializeField]
     private Vector3 paddleStartPosition;
@@ -34,24 +32,24 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private InGameUIController inGameUIController;
 
-    [SerializeField] 
-    private GameObject brickAPrefab;
     [SerializeField]
-    private GameObject brickBPrefab;
+    private int minimumBrickNumber = 6;
+
     [SerializeField]
-    private GameObject brickCPrefab;
+    private List<Brick> bricksRowA = new();
     [SerializeField]
-    private int brickRows = 3;
-    [SerializeField] 
-    private int brickColumns = 5;
+    private List<Brick> bricksRowB = new();
     [SerializeField]
-    private int minimumBrickNumber = 1;
+    private List<Brick> bricksRowC = new();
+
+    private List<Brick> bricks = new();
+
 
     // Start is called before the first frame update
     void Start()
     {
-        SpawnNewBall();
-        SpawnAllBricks();
+        SetupBall();
+        SetupBricks();
         //InvokeRepeating("CheckForEndOfGame", 20, 3);
         InvokeRepeating("CheckForLowBrickNumber", 20, 3);
         InitGameObjects();
@@ -97,16 +95,13 @@ public class GameController : MonoBehaviour
         inGameUIController.RemoveLive();
     }
 
-    public void ResetBall()
+    public void SetupBall()
     {
         if (GameObject.FindGameObjectWithTag("Ball"))
         {
             GameObject.FindGameObjectWithTag("Ball").transform.position = ballStartPosition;
             BallManager ballManager = GameObject.FindGameObjectWithTag("Ball").GetComponent<BallManager>();
             ballManager.ResetBallPhysics();
-        } else
-        {
-            Instantiate(ballPrefab, ballStartPosition, Quaternion.identity);
         }
     }
 
@@ -120,33 +115,45 @@ public class GameController : MonoBehaviour
 
     public void CheckForLowBrickNumber()
     {
-        if (GameObject.FindGameObjectsWithTag("Brick").Length < minimumBrickNumber) {
-            SpawnAllBricks(); //TODO -> change this so we can spawn new bricks in new open spaces instead of respawning all (would need to track all bricks and listen to some brick destroyed events)
+        int activeBrickCount = bricks.Count(brick => brick.gameObject.activeSelf);
+        if (activeBrickCount < minimumBrickNumber) {
+            // Reset inactive bricks to replenish the number
+            var inactiveBricks = bricks.Where(brick => !brick.gameObject.activeSelf).ToList();
+
+            // Shuffle the list to introduce randomness in selection
+            for (int i = 0; i < inactiveBricks.Count; i++)
+            {
+                int randomIndex = Random.Range(i, inactiveBricks.Count);
+                var temp = inactiveBricks[i];
+                inactiveBricks[i] = inactiveBricks[randomIndex];
+                inactiveBricks[randomIndex] = temp;
+            }
+
+            foreach (Brick brick in inactiveBricks)
+            {
+                brick.ResetBrick(maxBrickValue, useOperation, powerupChance);
+
+                // Stop resetting once the minimum is met
+                activeBrickCount++;
+                var randomExtra = Random.Range(0, 5); //Add a random number of extra bricks back
+                if (activeBrickCount >= minimumBrickNumber + randomExtra) break;
+            }
         }
     }
 
-    public void SpawnNewBall()
+    private void SetupBricks()
     {
-        Instantiate(ballPrefab, ballStartPosition, Quaternion.identity);
-    }
-
-    public void SpawnAllBricks()
-    {
-        //TODO change prefabs for different brick rows and types (e.g. for powerups)
         List<DtoTerm> allTerms = new();
-        GameObject prefab = brickAPrefab;
-        for (int i = 0; i < brickRows; i++)
+
+        bricks.AddRange(bricksRowC);
+        bricks.AddRange(bricksRowB);
+        bricks.AddRange(bricksRowA);
+
+        foreach (Brick brick in  bricks)
         {
-            if (i == 1) prefab = brickBPrefab;
-            if (i == 2) prefab = brickCPrefab;
-            for (int j = 0; j < brickColumns; j++)
-            {
-                GameObject prefabInstance = Instantiate(prefab, new Vector3((j*2.5f)-6.5f, (i*1.1f)+1.0f, 0), Quaternion.identity);
-                Brick script = prefabInstance.GetComponent<Brick>();
-                script.SetIsPowerup(powerupChance);
-                var term = script.SetBrickMathValue(maxBrickValue, useOperation);
-                allTerms.Add(term);
-            }
+            brick.SetIsPowerup(powerupChance);
+            var term = brick.SetBrickMathValue(maxBrickValue, useOperation);
+            allTerms.Add(term);
         }
 
         CalculateTargets(allTerms);

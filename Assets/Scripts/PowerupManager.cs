@@ -43,8 +43,8 @@ public class PowerupManager : MonoBehaviour
     public void SetPowerups(List<GameObject> gameObjects)
     {
         powerups = gameObjects;
-        ball = GameObject.Find("BouncingBall(Clone)");
-        paddle = GameObject.Find("Paddle");
+        ball = GameObject.FindGameObjectWithTag("Ball");
+        paddle = GameObject.FindGameObjectWithTag("Paddle");
     }
 
     public GameObject GetRandomPowerup()
