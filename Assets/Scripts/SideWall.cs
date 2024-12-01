@@ -18,10 +18,11 @@ public class WallCollision : MonoBehaviour
 
             if (Mathf.Abs(dotProduct) >= 0.95)
             {
-                Vector3 kickDirection;
-                int random = Random.Range(0, 1);
-                if (random == 0) kickDirection = Vector3.up;
-                else kickDirection = Vector3.down;
+                Vector3 kickDirection = Vector3.down;
+                //The following code randomizes wheter vector goes up or down, but just sticking to once direction is more consistent ...
+                //int random = Random.Range(0, 1);
+                //if (random == 0) kickDirection = Vector3.up;
+                //else kickDirection = Vector3.down;
                 ballRb.AddForce(kickDirection * kickForce, ForceMode.Impulse); //Apply a little kick up or downwards to the ball.
 
                 Debug.Log("Small angle detected (dot product: " + dotProduct + "). Kick applied with force: " + kickForce);

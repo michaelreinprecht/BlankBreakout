@@ -13,6 +13,10 @@ public class Ball : MonoBehaviour
     private PlayableDirector rightCollisionDirector;
     [SerializeField]
     private PlayableDirector leftCollisionDirector;
+    [SerializeField]
+    private ParticleSystem PaddleCollisionParticles;
+    [SerializeField]
+    private ParticleSystem BrickCollisionParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -34,15 +38,18 @@ public class Ball : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Paddle"))
         {
-            SoundManager.Instance.PlaySound("PaddleHit");
+            CinemachineShake.Instance.ShakeCamera(1f, .05f);
+            SoundManager.Instance.PlaySound("PaddleHit", 0.4f);
+            PaddleCollisionParticles.Play();
         }
-        if (collision.gameObject.CompareTag("BrickA") || collision.gameObject.CompareTag("BrickB") || collision.gameObject.CompareTag("BrickC"))
+        if (collision.gameObject.CompareTag("Brick") && collision.gameObject.activeSelf)
         {
-            SoundManager.Instance.PlaySound("BrickHit1");
+            SoundManager.Instance.PlaySound("BrickHit1", 1f);
+            BrickCollisionParticles.Play();
         }
         if (collision.gameObject.CompareTag("Border"))
         {
-            SoundManager.Instance.PlaySound("WallHit");
+            SoundManager.Instance.PlaySound("BrickHit1", 1f);
         }   
     }
 

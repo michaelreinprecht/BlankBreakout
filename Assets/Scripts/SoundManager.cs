@@ -16,8 +16,9 @@ public class SoundManager : MonoBehaviour
         Instance = this;
     }
     
-    public void PlaySound(string sound)
+    public void PlaySound(string sound, float volume)
     {
+        audioSource.volume = volume;
         audioSource.PlayOneShot(Resources.Load<AudioClip>(sound));
     }
 }

@@ -6238,7 +6238,7 @@ MonoBehaviour:
   reflectingForce: 0
   brickCollider: {fileID: -4278684645514499559}
   destructionParticles: {fileID: 9170938232293332792}
-  destroySound: BrickBreak1
+  destroySound: BrickBreak
   director: {fileID: 1324206102809833482}
   mathValueTextBrick: {fileID: 4197062284302833096}
 --- !u!4 &4729571583044805622 stripped
