@@ -307,9 +307,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b014cee1f8dc0e34490d297e62ccb105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paddleSpeed: 30
-  xPosMin: -6.8
-  xPosMax: 6.6
+  paddleSpeed: 40
+  xPosMin: -9.8
+  xPosMax: 9.6
   textObject: {fileID: 6942699605336265338}
 --- !u!1 &7921894963778457348
 GameObject:
