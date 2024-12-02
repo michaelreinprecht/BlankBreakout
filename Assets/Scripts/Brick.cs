@@ -21,16 +21,22 @@ public class Brick : MonoBehaviour
     private PlayableDirector director;
     [SerializeField]
     private TextMeshPro mathValueTextBrick;
+    [SerializeField]
+    private DropDown_MathOp linkedDropDown;
 
     private bool isPowerUp;
     private int currentHitPoints;
     private int mathValue;
     private MathOperatorsEnum mathOperator;
-    private DropDown_MathOp linkedDropDown;
     private Rigidbody rb;
 
     private float scaleTimerMax = 1f;
     private float scaleTimer = 1f;
+
+    //private void Start()
+    //{
+    //    linkedDropDown = GetComponent<DropDown_MathOp>();
+    //}
 
     public void SetIsPowerup(int chance)
     {
@@ -62,6 +68,7 @@ public class Brick : MonoBehaviour
         currentHitPoints = hitPoints;
         mathValue = UnityEngine.Random.Range(1, maxValue);
         mathValueTextBrick.text = mathOperator.ToSymbol() + mathValue.ToString();
+        SetupDropdown();
 
         return new DtoTerm() { MathOperator = mathOperator, Value = mathValue };
     }
@@ -148,6 +155,7 @@ public class Brick : MonoBehaviour
             brickRenderer.enabled = true; // Ensure the brick is visible
         }
         ScaleInBrick();
+        SetupDropdown();
         gameObject.SetActive(true); // Ensure the brick is visible
     }
 
@@ -178,9 +186,10 @@ public class Brick : MonoBehaviour
 
     private void DropMathTerm()
     {
-        var rb = linkedDropDown.GetComponent<Rigidbody>();
-        rb.GetComponent<Rigidbody>().useGravity = true;
-        linkedDropDown.SetVisibility(true);
+        linkedDropDown.gameObject.SetActive(true);
+        //var rb = linkedDropDown.GetComponent<Rigidbody>();
+        //rb.GetComponent<Rigidbody>().useGravity = true;
+        //linkedDropDown.SetVisibility(true);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -205,9 +214,9 @@ public class Brick : MonoBehaviour
         }
     }
 
-    public void LinkDropDown(DropDown_MathOp dropDown)
+    public void SetupDropdown()
     {
-        linkedDropDown = dropDown;
+        linkedDropDown.gameObject.SetActive(false);
         linkedDropDown.SetDropDownValue(mathOperator, mathValue);
         linkedDropDown.transform.position = transform.position;
     }

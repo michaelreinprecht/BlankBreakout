@@ -15,16 +15,16 @@ public class DropDown_MathOp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.useGravity = false;
-        dropDownRenderer = GetComponentInChildren<Renderer>();
-        if (dropDownRenderer == null)
-        {
-            Debug.LogError("Renderer not found on DropDown_MathOp or its children.");
-            return;
-        }
-        //dropDownRenderer.enabled = false;
-        SetVisibility(false);
+        gameObject.SetActive(false);
+        //rb = GetComponent<Rigidbody>();
+        //rb.useGravity = false;
+        //dropDownRenderer = GetComponentInChildren<Renderer>();
+        //if (dropDownRenderer == null)
+        //{
+        //    Debug.LogError("Renderer not found on DropDown_MathOp or its children.");
+        //    return;
+        //}
+        //SetVisibility(false);
     }
 
     public void SetDropDownValue(MathOperatorsEnum brickMathOperator, int brickMathValue)
@@ -34,15 +34,15 @@ public class DropDown_MathOp : MonoBehaviour
         mathValueText.text = brickMathOperator.ToSymbol() + mathValue.ToString();
     }
     
-    public void SetVisibility(bool isVisible)
-    {
-        if (dropDownRenderer != null)
-        {
-            dropDownRenderer.enabled = isVisible;
-        }
-        if (mathValueText != null)
-        {
-            mathValueText.enabled = isVisible;
-        }
-    }
+    //public void SetVisibility(bool isVisible)
+    //{
+    //    if (dropDownRenderer != null)
+    //    {
+    //        dropDownRenderer.enabled = isVisible;
+    //    }
+    //    if (mathValueText != null)
+    //    {
+    //        mathValueText.enabled = isVisible;
+    //    }
+    //}
 }

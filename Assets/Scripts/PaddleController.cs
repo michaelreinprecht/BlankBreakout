@@ -102,7 +102,7 @@ public class PaddleController : MonoBehaviour
                 }
             textObject.text = value.ToString();
 
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
         }
     }
 }
