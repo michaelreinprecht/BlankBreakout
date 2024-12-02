@@ -8,6 +8,7 @@ public class PowerupManager : MonoBehaviour
     private List<GameObject> powerups;
     private GameObject ball;
     private GameObject paddle;
+    private List<PowerupTypes> activePowerups = new();
 
     public static PowerupManager Instance
     {
@@ -58,19 +59,34 @@ public class PowerupManager : MonoBehaviour
         return powerups[index];
     }
 
-    public void Activate(PowerupTypes type, float value, int duration)
+    public void Activate(PowerupTypes type, float value, int duration, bool stackable)
     {
+        if (!stackable && activePowerups.Contains(type))
+        {
+            return;
+        }
+
+        StartCoroutine(HandlePowerup(type, value, duration));
+    }
+
+    private IEnumerator HandlePowerup(PowerupTypes type, float value, int duration)
+    {
+        activePowerups.Add(type);
+
         switch (type)
         {
             case PowerupTypes.Speed:
-                StartCoroutine(ActivateSpeedPowerup(value, duration));
+                yield return StartCoroutine(ActivateSpeedPowerup(value, duration));
                 break;
             case PowerupTypes.PaddleWidth:
-                StartCoroutine(ActivatePaddleStretching(value, duration));
+                yield return StartCoroutine(ActivatePaddleStretching(value, duration));
                 break;
             default:
+                Debug.LogWarning($"Unhandled powerup type: {type}");
                 break;
         }
+
+        activePowerups.Remove(type);
     }
 
     private IEnumerator ActivateSpeedPowerup(float value, int duration)
@@ -87,10 +103,28 @@ public class PowerupManager : MonoBehaviour
     private IEnumerator ActivatePaddleStretching(float value, int duration)
     {
         Vector3 originalScale = paddle.transform.localScale;
+        Vector3 targetScale = new Vector3(originalScale.x * value, originalScale.y, originalScale.z);
+        float scaleTimer = 0f;
+        float scaleDuration = 1f;
 
-        paddle.transform.localScale = new Vector3(originalScale.x * value, originalScale.y, originalScale.z);
+        while (scaleTimer < scaleDuration)
+        {
+            scaleTimer += Time.deltaTime;
+            paddle.transform.localScale = Vector3.Lerp(originalScale, targetScale, scaleTimer / scaleDuration);
+            yield return null;
+        }
+
+        paddle.transform.localScale = targetScale;
 
         yield return new WaitForSeconds(duration);
+
+        scaleTimer = 0f;
+        while (scaleTimer < scaleDuration)
+        {
+            scaleTimer += Time.deltaTime;
+            paddle.transform.localScale = Vector3.Lerp(targetScale, originalScale, scaleTimer / scaleDuration);
+            yield return null;
+        }
 
         paddle.transform.localScale = originalScale;
     }

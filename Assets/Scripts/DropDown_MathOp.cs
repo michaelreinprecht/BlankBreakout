@@ -6,21 +6,22 @@ using TMPro;
 public class DropDown_MathOp : MonoBehaviour
 {
     private Rigidbody rb;
-    public TextMeshPro mathValue;
+    public TextMeshPro mathValueText;
+    public int mathValue;
+    public MathOperatorsEnum mathOperator;
+    private Renderer dropDownRenderer;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
-        rb = GetComponent<Rigidbody>();
-        rb.GetComponent<Rigidbody>().useGravity = true;
-        mathValue.text = "+4";
+        gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetDropDownValue(MathOperatorsEnum brickMathOperator, int brickMathValue)
     {
-        
+        mathOperator = brickMathOperator;
+        mathValue = brickMathValue;
+        mathValueText.text = brickMathOperator.ToSymbol() + mathValue.ToString();
     }
 }

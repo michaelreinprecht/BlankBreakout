@@ -21,14 +21,22 @@ public class Brick : MonoBehaviour
     private PlayableDirector director;
     [SerializeField]
     private TextMeshPro mathValueTextBrick;
+    [SerializeField]
+    private DropDown_MathOp linkedDropDown;
 
     private bool isPowerUp;
     private int currentHitPoints;
     private int mathValue;
-    private string mathOperator;
+    private MathOperatorsEnum mathOperator;
+    private Rigidbody rb;
 
     private float scaleTimerMax = 1f;
     private float scaleTimer = 1f;
+
+    //private void Start()
+    //{
+    //    linkedDropDown = GetComponent<DropDown_MathOp>();
+    //}
 
     public void SetIsPowerup(int chance)
     {
@@ -55,27 +63,14 @@ public class Brick : MonoBehaviour
     // Start is called before the first frame update
     public DtoTerm SetBrickMathValue(int maxValue, List<MathOperatorsEnum> validOperations)
     {
-        MathOperatorsEnum randomOperator = (MathOperatorsEnum)validOperations[UnityEngine.Random.Range(0, validOperations.Count)];
-        switch (randomOperator)
-        {
-            case MathOperatorsEnum.SUBTRACTION:
-                mathOperator = "-";
-                break;
-            case MathOperatorsEnum.ADDITION:
-                mathOperator = "+";
-                break;
-            case MathOperatorsEnum.MULTIPLICATION:
-                mathOperator = "*";
-                break;
-            default:
-                mathOperator = "+";
-                break;
-        }
+        this.mathOperator = (MathOperatorsEnum)validOperations[UnityEngine.Random.Range(0, validOperations.Count)];
+
         currentHitPoints = hitPoints;
         mathValue = UnityEngine.Random.Range(1, maxValue);
-        mathValueTextBrick.text = mathOperator + mathValue.ToString();
+        mathValueTextBrick.text = mathOperator.ToSymbol() + mathValue.ToString();
+        SetupDropdown();
 
-        return new DtoTerm() { MathOperator = randomOperator, Value = mathValue };
+        return new DtoTerm() { MathOperator = mathOperator, Value = mathValue };
     }
 
     //Add force to ball when reflecting form brick if needed and invoke callback with damage number
@@ -124,7 +119,7 @@ public class Brick : MonoBehaviour
             destructionParticles.Play();
         }
         mathValueTextBrick.text = "";     
-        StartCoroutine(DeactivateBrickAfterDelay(1.5f));
+        StartCoroutine(DeactivateBrickAfterDelay(5f));
     }
 
     private IEnumerator DeactivateBrickAfterDelay(float delay)
@@ -160,6 +155,7 @@ public class Brick : MonoBehaviour
             brickRenderer.enabled = true; // Ensure the brick is visible
         }
         ScaleInBrick();
+        SetupDropdown();
         gameObject.SetActive(true); // Ensure the brick is visible
     }
 
@@ -188,10 +184,12 @@ public class Brick : MonoBehaviour
         StartCoroutine(EnableGravityAfterDelay(powerUpInstance, 0.5f));
     }
 
-
     private void DropMathTerm()
     {
-        //TODO
+        linkedDropDown.gameObject.SetActive(true);
+        //var rb = linkedDropDown.GetComponent<Rigidbody>();
+        //rb.GetComponent<Rigidbody>().useGravity = true;
+        //linkedDropDown.SetVisibility(true);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -214,5 +212,12 @@ public class Brick : MonoBehaviour
         {
             powerUpRb.useGravity = true;
         }
+    }
+
+    public void SetupDropdown()
+    {
+        linkedDropDown.gameObject.SetActive(false);
+        linkedDropDown.SetDropDownValue(mathOperator, mathValue);
+        linkedDropDown.transform.position = transform.position;
     }
 }
