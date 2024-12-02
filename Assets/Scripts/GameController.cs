@@ -73,6 +73,7 @@ public class GameController : MonoBehaviour
         inGameUIController.AllLivesLost += GameOver;
         //inGameUIController.TargetsCleared += todo;
         inGameUIController.NonTargetCleared += GameOver;
+        inGameUIController.StartTimer();
     }
 
     // Update is called once per frame
@@ -90,6 +91,7 @@ public class GameController : MonoBehaviour
     {
         gameOverScreen.GetComponent<Canvas>().enabled = true;
         Time.timeScale = 0;
+        inGameUIController.StopTimer(); 
     }
 
     public void LooseALife()

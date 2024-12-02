@@ -27,8 +27,6 @@ public class Timer : MonoBehaviour
         UpdateUi();
     }
 
-    
-
     public void StartTimer()
     {
         Debug.Log("StartTimer called in Timer.cs");
@@ -43,10 +41,16 @@ public class Timer : MonoBehaviour
         timerText.text = FormatTimeTextField();
     }
 
+    public void StopTimer()
+    {
+        Debug.Log("StopTimer called in Timer.cs");
+        timeStarted = false;
+    }
+
     private string FormatTimeTextField()
     {
         int minutes = Mathf.FloorToInt(timer / 60F);
         int seconds = Mathf.FloorToInt(timer - minutes * 60);
-        return string.Format("{0:00}:{1:00}", minutes, seconds);
+        return string.Format("{0:0}:{1:00}", minutes, seconds);
     }
 }
