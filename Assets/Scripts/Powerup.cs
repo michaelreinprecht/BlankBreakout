@@ -8,6 +8,8 @@ public class Powerup : MonoBehaviour
     private float value;
     [SerializeField]
     private int durationInSeconds;
+    [SerializeField]
+    private bool stackable;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -18,7 +20,7 @@ public class Powerup : MonoBehaviour
         if (other.gameObject.CompareTag("Paddle"))
         {
             Destroy(gameObject);
-            PowerupManager.Instance.Activate(type, value, durationInSeconds);
+            PowerupManager.Instance.Activate(type, value, durationInSeconds, stackable);
         }
     }
 }
