@@ -18,6 +18,7 @@ public class PlayerData : MonoBehaviour
     private float bestTime;
     private int gamesPlayed;
     private List<float> ListOfTimesPast = new List<float>();
+    private string path = PlayerSave.GetFilePath();
   
     void Start()
     {
@@ -32,10 +33,10 @@ public class PlayerData : MonoBehaviour
 
     public void LoadHighscores()
     {
-        if (File.Exists(Application.persistentDataPath + "/timersave.save"))
+        if (File.Exists(path))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/timersave.save", FileMode.Open);
+            FileStream file = File.Open(path, FileMode.Open);
             PlayerSave save = (PlayerSave)bf.Deserialize(file);
             file.Close();
             ListOfTimesPast = save.ListOfTimesPast_Level1;

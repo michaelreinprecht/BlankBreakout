@@ -47,9 +47,9 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private List<Brick> bricksRowC = new();
      [SerializeField]
-    private GameObject dropDown_MathOpPrefab;
 
     private List<Brick> bricks = new();
+    private string path = PlayerSave.GetFilePath();
 
     // Start is called before the first frame update
     void Start()
@@ -133,7 +133,7 @@ public class GameController : MonoBehaviour
         playerSave.ListOfTimesPast_Level1.Add(levelTime);
 
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/timersave.save");
+        FileStream file = File.Create(path);
         bf.Serialize(file, playerSave);
         file.Close();
 
@@ -142,7 +142,6 @@ public class GameController : MonoBehaviour
 
     private PlayerSave LoadPlayerSave()
     {
-        string path = Application.persistentDataPath + "/timersave.save";
         if (File.Exists(path))
         {
             BinaryFormatter bf = new BinaryFormatter();
