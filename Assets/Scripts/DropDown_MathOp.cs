@@ -9,7 +9,6 @@ public class DropDown_MathOp : MonoBehaviour
     public TextMeshPro mathValueText;
     public int mathValue;
     public MathOperatorsEnum mathOperator;
-    private Renderer dropDownRenderer;
 
 
     // Start is called before the first frame update

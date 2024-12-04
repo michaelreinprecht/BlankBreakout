@@ -57,8 +57,6 @@ public class GameController : MonoBehaviour
         InitGameObjects();
         InitInGameUIController();
         PowerupManager.Instance.SetPowerups(usePowerup);
-
-        Time.timeScale = 1;
     }
 
     public void InitGameObjects()
@@ -82,8 +80,14 @@ public class GameController : MonoBehaviour
 
     public void CheckTargets()
     {
-        inGameUIController.ContainsTarget(paddle.GetValue());
-        inGameUIController.ContainsNonTarget(paddle.GetValue());
+        if (inGameUIController.ContainsTarget(paddle.GetValue()))
+        {
+            paddle.LogTargetHit();
+        }
+        if (inGameUIController.ContainsNonTarget(paddle.GetValue()))
+        {
+            paddle.LogNonTargetHit();
+        }
     }
 
     public void GameOver()

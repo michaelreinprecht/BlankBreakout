@@ -12,9 +12,20 @@ public class PaddleController : MonoBehaviour
     private float xPosMax = 6.6f;
     [SerializeField] 
     private TMP_Text textObject;
+    [SerializeField]
+    private TMP_Text historyLog;
+    private string currentHistoryLine;
 
     private int value;
     public Action ValueChanged;
+
+
+
+    private void Start()
+    {
+        historyLog.text = "<color=#005500><b>Reached Goals:</b></color>\n\n";
+        currentHistoryLine += value.ToString();
+    }
 
     public void SetValue(int startingValue)
     {
@@ -78,8 +89,7 @@ public class PaddleController : MonoBehaviour
     {
         if (other.CompareTag("DropDown_MathOperation"))
         {
-            other.enabled = false; //  Disables the collider to prevent further interactions
-
+            other.gameObject.SetActive(false);
             MathOperatorsEnum mathOperator = other.GetComponent<DropDown_MathOp>().mathOperator;
             int termValue = other.GetComponent<DropDown_MathOp>().mathValue;
           
@@ -100,9 +110,20 @@ public class PaddleController : MonoBehaviour
                     default:
                         break;
                 }
-            textObject.text = value.ToString();
+            currentHistoryLine += mathOperator.ToSymbol(); //Update history ...
+            currentHistoryLine += termValue.ToString();
 
-            other.gameObject.SetActive(false);
+            textObject.text = value.ToString();
         }
+    }
+
+    public void LogTargetHit()
+    {
+        historyLog.text += currentHistoryLine + " = <color=#005500>" + value.ToString() + "</color>\n";
+    }
+
+    public void LogNonTargetHit()
+    {
+        historyLog.text += currentHistoryLine + " = <color=#ff0000>" + value.ToString() + "</color>\n";
     }
 }
