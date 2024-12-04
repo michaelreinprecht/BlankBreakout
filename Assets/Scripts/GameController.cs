@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
 using UnityEngine;
+
 
 public class GameController : MonoBehaviour
 {
@@ -30,6 +33,8 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private Canvas gameOverScreen;
     [SerializeField]
+    private Canvas LevelWonScreen;
+    [SerializeField]
     private InGameUIController inGameUIController;
 
     [SerializeField]
@@ -42,10 +47,9 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private List<Brick> bricksRowC = new();
      [SerializeField]
-    private GameObject dropDown_MathOpPrefab;
 
     private List<Brick> bricks = new();
-
+    private string path;
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +61,9 @@ public class GameController : MonoBehaviour
         InitGameObjects();
         InitInGameUIController();
         PowerupManager.Instance.SetPowerups(usePowerup);
+        path = PlayerSave.GetFilePath();
+        
+        Time.timeScale = 1;
     }
 
     public void InitGameObjects()
@@ -69,8 +76,9 @@ public class GameController : MonoBehaviour
     {
         inGameUIController.SetLives(lives);
         inGameUIController.AllLivesLost += GameOver;
-        //inGameUIController.TargetsCleared += todo;
+        inGameUIController.TargetsCleared += LevelWon;
         inGameUIController.NonTargetCleared += GameOver;
+        inGameUIController.StartTimer();
     }
 
     // Update is called once per frame
@@ -94,6 +102,7 @@ public class GameController : MonoBehaviour
     {
         gameOverScreen.GetComponent<Canvas>().enabled = true;
         Time.timeScale = 0;
+        inGameUIController.StopTimer();
     }
 
     public void LooseALife()
@@ -111,8 +120,57 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void CheckForEndOfGame()
+    public void LevelWon()
     {
+        inGameUIController.StopTimer();
+        Time.timeScale = 0;
+        LevelWonScreen.GetComponent<Canvas>().enabled = true;
+        SaveTime();
+    }
+
+    private void SaveTime()
+    {
+        PlayerSave playerSave = LoadPlayerSave();
+        if (playerSave == null)
+        {
+            playerSave = new PlayerSave();
+        }
+
+        float levelTime = inGameUIController.GetTime();
+        playerSave.ListOfTimesPast_Level1.Add(levelTime);
+
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(path);
+        bf.Serialize(file, playerSave);
+        file.Close();
+
+        Debug.Log("Time saved");
+    }
+
+    private PlayerSave LoadPlayerSave()
+    {
+        if (File.Exists(path))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(path, FileMode.Open);
+            try 
+            {
+                PlayerSave playerSave = (PlayerSave)bf.Deserialize(file);
+                file.Close();
+                return playerSave;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("Error loading save file: " + e.Message);
+                file.Close();
+            }
+            
+        }
+        return null;
+    }
+
+    public void CheckForEndOfGame()
+    {        
         //if (GameObject.Find("BrickLineC").transform.childCount == 0)
         //{
         //    SceneManager.LoadScene(0);

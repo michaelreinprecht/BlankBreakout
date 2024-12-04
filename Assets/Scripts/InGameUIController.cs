@@ -10,6 +10,8 @@ public class InGameUIController: MonoBehaviour
     private TargetManager targetManager;
     [SerializeField]
     private TargetManager nonTargetManager;
+    [SerializeField]
+    private Timer timer;
 
     public Action AllLivesLost;
     public Action TargetsCleared;
@@ -66,5 +68,20 @@ public class InGameUIController: MonoBehaviour
         }
 
         return hit;
+    }
+
+    public void StartTimer()
+    {
+        timer.StartTimer();
+    }
+
+    public void StopTimer()
+    {
+        timer.StopTimer();
+    }
+
+    public float GetTime()
+    {
+        return timer.GetTime();
     }
 }

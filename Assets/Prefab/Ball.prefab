@@ -168,6 +168,8 @@ MonoBehaviour:
   topCollisionDirector: {fileID: 0}
   rightCollisionDirector: {fileID: 0}
   leftCollisionDirector: {fileID: 0}
+  PaddleCollisionParticles: {fileID: 0}
+  BrickCollisionParticles: {fileID: 0}
 --- !u!96 &3519343401485772545
 TrailRenderer:
   serializedVersion: 3
