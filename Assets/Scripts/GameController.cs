@@ -88,8 +88,14 @@ public class GameController : MonoBehaviour
 
     public void CheckTargets()
     {
-        inGameUIController.ContainsTarget(paddle.GetValue());
-        inGameUIController.ContainsNonTarget(paddle.GetValue());
+        if (inGameUIController.ContainsTarget(paddle.GetValue()))
+        {
+            paddle.LogTargetHit();
+        }
+        if (inGameUIController.ContainsNonTarget(paddle.GetValue()))
+        {
+            paddle.LogNonTargetHit();
+        }
     }
 
     public void GameOver()
