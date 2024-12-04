@@ -267,7 +267,10 @@ public class GameController : MonoBehaviour
                 }
             }
 
-            targets.Add(calculateTarget);
+            if (!targets.Contains(calculateTarget) && calculateTarget != paddleValue)
+            {
+                targets.Add(calculateTarget);
+            }
         }
 
         List<int> nonTargets = new();
@@ -275,7 +278,7 @@ public class GameController : MonoBehaviour
         {
             int randomNonTarget = Random.Range(minTargetValue, maxTargetValue + 1);
 
-            if (!targets.Contains(randomNonTarget) && !nonTargets.Contains(randomNonTarget))
+            if (!targets.Contains(randomNonTarget) && !nonTargets.Contains(randomNonTarget) && randomNonTarget != paddleValue)
             {
                 nonTargets.Add(randomNonTarget);
             }
