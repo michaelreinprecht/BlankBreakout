@@ -18,10 +18,8 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("update in Timer.cs called.");
         if(timeStarted)
         {
-            Debug.Log("timeStarted is TRUE in update()");
             timer += Time.deltaTime;
         }
         UpdateUi();
@@ -29,7 +27,6 @@ public class Timer : MonoBehaviour
 
     public void StartTimer()
     {
-        Debug.Log("StartTimer called in Timer.cs");
         timer = 0;
         timeStarted = true;
         UpdateUi();
@@ -37,13 +34,11 @@ public class Timer : MonoBehaviour
 
     private void UpdateUi()
     {
-        Debug.Log("UpdateUi called in Timer.cs");
         timerText.text = FormatTimeTextField();
     }
 
     public void StopTimer()
     {
-        Debug.Log("StopTimer called in Timer.cs");
         timeStarted = false;
     }
 
