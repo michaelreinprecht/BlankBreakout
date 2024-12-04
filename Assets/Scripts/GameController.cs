@@ -80,6 +80,7 @@ public class GameController : MonoBehaviour
         inGameUIController.SetLives(lives);
         inGameUIController.AllLivesLost += GameOver;
         inGameUIController.TargetsCleared += LevelWon;
+        inGameUIController.NonTargetCleared += () => { };
         inGameUIController.StartTimer();
     }
 
