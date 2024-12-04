@@ -5631,11 +5631,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lives: 3
-  useOperation: 0100000000000000
-  maxBrickValue: 10
+  useOperation: 01000000
+  overflowValue: 0
+  minTargetValue: 0
+  maxTargetValue: 20
   paddleValue: 1
-  numberOfTargets: 4
-  numberOfNonTargets: 2
+  numberOfTargets: 1
+  numberOfNonTargets: 1
   powerupChance: 10
   usePowerup:
   - {fileID: 3882633660276137872, guid: 8f0d110d3485ccc42882227c4d048746, type: 3}

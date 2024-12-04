@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using UnityEditor;
 using UnityEngine;
 
 
@@ -13,7 +12,11 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private List<MathOperatorsEnum> useOperation = new() { MathOperatorsEnum.ADDITION, MathOperatorsEnum.SUBTRACTION};
     [SerializeField]
-    private int maxBrickValue = 10;
+    private int overflowValue = 0;
+    [SerializeField]
+    private int minTargetValue = 0;
+    [SerializeField]
+    private int maxTargetValue = 20;
     [SerializeField] 
     private int paddleValue = 1;
     [SerializeField]
@@ -68,7 +71,7 @@ public class GameController : MonoBehaviour
 
     public void InitGameObjects()
     {
-        paddle.SetValue(paddleValue);
+        paddle.SetValue(paddleValue, maxTargetValue, minTargetValue, overflowValue);
         paddle.ValueChanged += CheckTargets;
     }
 
@@ -77,7 +80,6 @@ public class GameController : MonoBehaviour
         inGameUIController.SetLives(lives);
         inGameUIController.AllLivesLost += GameOver;
         inGameUIController.TargetsCleared += LevelWon;
-        inGameUIController.NonTargetCleared += GameOver;
         inGameUIController.StartTimer();
     }
 
@@ -193,7 +195,7 @@ public class GameController : MonoBehaviour
 
             foreach (Brick brick in inactiveBricks)
             {
-                brick.ResetBrick(maxBrickValue, useOperation, powerupChance);
+                brick.ResetBrick((int)Mathf.Round(maxTargetValue/4), useOperation, powerupChance);
 
                 // Stop resetting once the minimum is met
                 activeBrickCount++;
@@ -214,20 +216,19 @@ public class GameController : MonoBehaviour
         foreach (Brick brick in  bricks)
         {
             brick.SetIsPowerup(powerupChance);
-            var term = brick.SetBrickMathValue(maxBrickValue, useOperation);
+            var term = brick.SetBrickMathValue((int)Mathf.Round(maxTargetValue / 4), useOperation);
             allTerms.Add(term);
         }
 
         CalculateTargets(allTerms);
     }
 
-    //maybe move some parts of this code out of this class
     public void CalculateTargets(List<DtoTerm> allTerms)
     {
         List<int> targets = new();
 
         int calculateTarget = paddleValue;
-        while (targets.Count != numberOfTargets)
+        while (targets.Count < numberOfTargets)
         {
             int termLength = Random.Range(2, 4); //To reach next target you ideally need 2 or 3 bricks 
 
@@ -252,15 +253,30 @@ public class GameController : MonoBehaviour
                         break;
                 }
             }
+
+            while (calculateTarget < minTargetValue || calculateTarget > maxTargetValue)
+            {
+                if (calculateTarget < minTargetValue)
+                {
+                    int overflow = calculateTarget - minTargetValue;
+                    calculateTarget = overflowValue - overflow;
+                }
+                else if (calculateTarget > maxTargetValue)
+                {
+                    int overflow = calculateTarget - maxTargetValue;
+                    calculateTarget = overflowValue + overflow;
+                }
+            }
+
             targets.Add(calculateTarget);
         }
 
         List<int> nonTargets = new();
-        while (nonTargets.Count != numberOfNonTargets)
+        while (nonTargets.Count < numberOfNonTargets)
         {
-            int randomNonTarget = Random.Range(targets.Min(), targets.Max() + 1);
+            int randomNonTarget = Random.Range(minTargetValue, maxTargetValue + 1);
 
-            if (!targets.Contains(randomNonTarget))
+            if (!targets.Contains(randomNonTarget) && !nonTargets.Contains(randomNonTarget))
             {
                 nonTargets.Add(randomNonTarget);
             }

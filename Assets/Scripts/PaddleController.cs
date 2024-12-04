@@ -16,10 +16,12 @@ public class PaddleController : MonoBehaviour
     private TMP_Text historyLog;
     private string currentHistoryLine;
 
+    private int maxValue;
+    private int minValue;
+    private int overflowValue;
+
     private int value;
     public Action ValueChanged;
-
-
 
     private void Start()
     {
@@ -27,9 +29,12 @@ public class PaddleController : MonoBehaviour
         currentHistoryLine += value.ToString();
     }
 
-    public void SetValue(int startingValue)
+    public void SetValue(int startingValue, int maxValue, int minValue, int overflow)
     {
         value = startingValue;
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+        overflowValue = overflow;
         SetContent(value);
     }
 
@@ -97,24 +102,32 @@ public class PaddleController : MonoBehaviour
                 {
                     case MathOperatorsEnum.SUBTRACTION:
                         value -= termValue;
-                        ValueChanged();
                         break;
                     case MathOperatorsEnum.ADDITION:
                         value += termValue;
-                        ValueChanged();
                         break;
                     case MathOperatorsEnum.MULTIPLICATION:
                         value *= termValue;
-                        ValueChanged();
                         break;
                     default:
                         break;
                 }
             currentHistoryLine += mathOperator.ToSymbol(); //Update history ...
             currentHistoryLine += termValue.ToString();
+            CheckForOverflow();
 
             textObject.text = value.ToString();
         }
+    }
+
+    private void CheckForOverflow()
+    {
+        if (value < minValue || value > maxValue)
+        {
+            value = overflowValue;
+            currentHistoryLine = string.Empty;
+        }
+        ValueChanged();
     }
 
     public void LogTargetHit()
