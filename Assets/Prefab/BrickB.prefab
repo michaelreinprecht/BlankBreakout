@@ -6309,6 +6309,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4836363358705173420, guid: 769751377f4e35f4eb64e0a54f8e7bf7, type: 3}
+      propertyPath: m_Drag
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4836363358705173420, guid: 769751377f4e35f4eb64e0a54f8e7bf7, type: 3}
+      propertyPath: m_Mass
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 9091978888525240204, guid: 769751377f4e35f4eb64e0a54f8e7bf7, type: 3}
       propertyPath: m_Name
       value: DropDown_MathOperation
