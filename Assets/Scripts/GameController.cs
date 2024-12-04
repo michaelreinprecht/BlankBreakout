@@ -49,9 +49,9 @@ public class GameController : MonoBehaviour
     private List<Brick> bricksRowB = new();
     [SerializeField]
     private List<Brick> bricksRowC = new();
-     [SerializeField]
-
+    [SerializeField]
     private List<Brick> bricks = new();
+
     private string path;
 
     // Start is called before the first frame update
@@ -65,8 +65,6 @@ public class GameController : MonoBehaviour
         InitInGameUIController();
         PowerupManager.Instance.SetPowerups(usePowerup);
         path = PlayerSave.GetFilePath();
-        
-        Time.timeScale = 1;
     }
 
     public void InitGameObjects()
