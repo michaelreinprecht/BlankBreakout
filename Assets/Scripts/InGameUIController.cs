@@ -79,4 +79,9 @@ public class InGameUIController: MonoBehaviour
     {
         timer.StopTimer();
     }
+
+    public float GetTime()
+    {
+        return timer.GetTime();
+    }
 }

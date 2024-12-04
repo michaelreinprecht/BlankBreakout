@@ -53,4 +53,9 @@ public class Timer : MonoBehaviour
         int seconds = Mathf.FloorToInt(timer - minutes * 60);
         return string.Format("{0:0}:{1:00}", minutes, seconds);
     }
+
+    public float GetTime()
+    {
+        return timer;
+    }
 }
