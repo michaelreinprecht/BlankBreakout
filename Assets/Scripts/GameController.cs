@@ -102,7 +102,7 @@ public class GameController : MonoBehaviour
     {
         gameOverScreen.GetComponent<Canvas>().enabled = true;
         Time.timeScale = 0;
-        inGameUIController.StopTimer();         
+        inGameUIController.StopTimer();
     }
 
     public void LooseALife()
