@@ -2368,6 +2368,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6407413481819639245, guid: 7b5f48c3535c286419d93690b2fc5ba9, type: 3}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 2054647231}
     - target: {fileID: 173528000804398627, guid: 7b5f48c3535c286419d93690b2fc5ba9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5038,7 +5042,7 @@ MonoBehaviour:
   - {fileID: 1528183389}
   - {fileID: 522743368}
   - {fileID: 2021663848}
-  dropDown_MathOpPrefab: {fileID: 9091978888525240204, guid: 769751377f4e35f4eb64e0a54f8e7bf7, type: 3}
+  bricks: []
 --- !u!4 &2054647232
 Transform:
   m_ObjectHideFlags: 0

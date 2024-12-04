@@ -18,11 +18,11 @@ public class PlayerData : MonoBehaviour
     private float bestTime;
     private int gamesPlayed;
     private List<float> ListOfTimesPast = new List<float>();
-    private string path = PlayerSave.GetFilePath();
-  
+    private string path;
     void Start()
     {
-        LoadHighscores();
+        path = Application.persistentDataPath + "/timersave.save";
+        LoadHighscores(path);
     }
   
  
@@ -31,20 +31,31 @@ public class PlayerData : MonoBehaviour
         
     }
 
-    public void LoadHighscores()
+    public void LoadHighscores(string filePath)
     {
-        if (File.Exists(path))
+        if (filePath != null)
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(path, FileMode.Open);
-            PlayerSave save = (PlayerSave)bf.Deserialize(file);
-            file.Close();
-            ListOfTimesPast = save.ListOfTimesPast_Level1;
-            averageTime = GetAverageTime(ListOfTimesPast);
-            bestTime = GetBestTime(ListOfTimesPast);
-            gamesPlayed = ListOfTimesPast.Count;
+            if (File.Exists(filePath))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                FileStream file = File.Open(filePath, FileMode.Open);
+                PlayerSave save = (PlayerSave)bf.Deserialize(file);
+                file.Close();
+                ListOfTimesPast = save.ListOfTimesPast_Level1;
+                averageTime = GetAverageTime(ListOfTimesPast);
+                bestTime = GetBestTime(ListOfTimesPast);
+                gamesPlayed = ListOfTimesPast.Count;
+            }
+            else
+            {
+                Debug.Log("No save file found");
+            }   
         }
-        SetTextFields();        
+        else
+        {
+            Debug.Log("No file path found");
+        }
+        SetTextFields();   
     }
 
 
@@ -72,9 +83,20 @@ public class PlayerData : MonoBehaviour
 
     private void SetTextFields()
     {
+        if (averageTime == 0 || bestTime == 0 || gamesPlayed == 0)
+        {
+            Debug.LogError("Text fields not set in PlayerData");
+            averageTimeText.text = "0:00";
+            bestTimeText.text = "0:00";
+            gamesPlayedText.text = "0";
+            return;
+        } 
+        else
+        {   
         averageTimeText.text = FormatTime(averageTime);
         bestTimeText.text = FormatTime(bestTime);
         gamesPlayedText.text = gamesPlayed.ToString();
+        }
     }
 
     private string FormatTime(float time){
