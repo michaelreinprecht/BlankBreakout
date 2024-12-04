@@ -143,8 +143,6 @@ public class GameController : MonoBehaviour
         FileStream file = File.Create(path);
         bf.Serialize(file, playerSave);
         file.Close();
-
-        Debug.Log("Time saved");
     }
 
     private PlayerSave LoadPlayerSave()
