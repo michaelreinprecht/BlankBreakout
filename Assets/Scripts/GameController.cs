@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using TMPro;
 using UnityEngine;
 
 
@@ -51,6 +52,10 @@ public class GameController : MonoBehaviour
     private List<Brick> bricksRowC = new();
     [SerializeField]
     private List<Brick> bricks = new();
+    [SerializeField]
+    private TMP_Text levelEndTimeGameOver;
+    [SerializeField]
+    private TMP_Text levelEndTimeLevelWon;
 
     private string path;
 
@@ -104,6 +109,7 @@ public class GameController : MonoBehaviour
         gameOverScreen.GetComponent<Canvas>().enabled = true;
         Time.timeScale = 0;
         inGameUIController.StopTimer();
+        levelEndTimeGameOver.text = inGameUIController.GetTimeAsString();
     }
 
     public void LooseALife()
@@ -127,6 +133,7 @@ public class GameController : MonoBehaviour
         Time.timeScale = 0;
         LevelWonScreen.GetComponent<Canvas>().enabled = true;
         SaveTime();
+        levelEndTimeLevelWon.text = inGameUIController.GetTimeAsString();
     }
 
     private void SaveTime()

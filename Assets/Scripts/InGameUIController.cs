@@ -84,4 +84,9 @@ public class InGameUIController: MonoBehaviour
     {
         return timer.GetTime();
     }
+
+    public string GetTimeAsString()
+    {
+        return timer.GetTimeAsString();
+    }
 }
