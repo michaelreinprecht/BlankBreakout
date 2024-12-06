@@ -92,10 +92,12 @@ public class GameController : MonoBehaviour
         if (inGameUIController.ContainsTarget(paddle.GetValue()))
         {
             paddle.LogTargetHit();
+            SoundManager.Instance.PlaySound("ReachTarget", 1f);
         }
         if (inGameUIController.ContainsNonTarget(paddle.GetValue()))
         {
             paddle.LogNonTargetHit();
+            SoundManager.Instance.PlaySound("nonTargetReached", 1f);
         }
     }
 
