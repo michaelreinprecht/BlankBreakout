@@ -4389,7 +4389,7 @@ MonoBehaviour:
   overflowValue: 0
   minTargetValue: 0
   maxTargetValue: 20
-  paddleValue: 1
+  paddleValue: 0
   numberOfTargets: 3
   numberOfNonTargets: 2
   powerupChance: 10
@@ -4786,11 +4786,11 @@ PrefabInstance:
       objectReference: {fileID: 5241348301477514473, guid: e7b18bb131c009f45a9b9bf126e32733, type: 3}
     - target: {fileID: 4791281607441289933, guid: c8897cf7c74b5344e856ab6040b58db9, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5291148038416189697, guid: c8897cf7c74b5344e856ab6040b58db9, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5681414971187792546, guid: c8897cf7c74b5344e856ab6040b58db9, type: 3}
       propertyPath: m_Name
