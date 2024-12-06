@@ -26,6 +26,8 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private int powerupChance = 20;
     [SerializeField]
+    private int brickMaxValueRatio = 4;
+    [SerializeField]
     private List<GameObject> usePowerup = new();
     [SerializeField]
     private Vector3 ballStartPosition;
@@ -194,7 +196,7 @@ public class GameController : MonoBehaviour
 
             foreach (Brick brick in inactiveBricks)
             {
-                brick.ResetBrick((int)Mathf.Round(maxTargetValue/4), useOperation, powerupChance);
+                brick.ResetBrick((int)Mathf.Round(maxTargetValue/brickMaxValueRatio), useOperation, powerupChance);
 
                 // Stop resetting once the minimum is met
                 activeBrickCount++;
@@ -215,7 +217,7 @@ public class GameController : MonoBehaviour
         foreach (Brick brick in  bricks)
         {
             brick.SetIsPowerup(powerupChance);
-            var term = brick.SetBrickMathValue((int)Mathf.Round(maxTargetValue / 4), useOperation);
+            var term = brick.SetBrickMathValue((int)Mathf.Round(maxTargetValue / brickMaxValueRatio), useOperation);
             allTerms.Add(term);
         }
 
@@ -229,7 +231,7 @@ public class GameController : MonoBehaviour
         int calculateTarget = paddleValue;
         while (targets.Count < numberOfTargets)
         {
-            int termLength = Random.Range(2, 4); //To reach next target you ideally need 2 or 3 bricks 
+            int termLength = Random.Range(2, 4); //To reach next target you ideally need 2 or 3 bricks
 
             for (int i = 0; i < termLength; i++)
             {
@@ -255,15 +257,16 @@ public class GameController : MonoBehaviour
 
             while (calculateTarget < minTargetValue || calculateTarget > maxTargetValue)
             {
+                int overflow;
                 if (calculateTarget < minTargetValue)
                 {
-                    int overflow = calculateTarget - minTargetValue;
-                    calculateTarget = overflowValue - overflow;
+                    overflow = minTargetValue - calculateTarget;
+                    calculateTarget = overflowValue + overflow;
                 }
                 else if (calculateTarget > maxTargetValue)
                 {
-                    int overflow = calculateTarget - maxTargetValue;
-                    calculateTarget = overflowValue + overflow;
+                    overflow = calculateTarget - maxTargetValue;
+                    calculateTarget = overflowValue - overflow;
                 }
             }
 
