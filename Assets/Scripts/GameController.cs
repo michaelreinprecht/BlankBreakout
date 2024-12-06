@@ -29,6 +29,8 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private int brickMaxValueRatio = 4;
     [SerializeField]
+    private int brickMaxValueFlat = 0;
+    [SerializeField]
     private List<GameObject> usePowerup = new();
     [SerializeField]
     private Vector3 ballStartPosition;
@@ -210,7 +212,13 @@ public class GameController : MonoBehaviour
 
             foreach (Brick brick in inactiveBricks)
             {
-                brick.ResetBrick((int)Mathf.Round(maxTargetValue/brickMaxValueRatio), useOperation, powerupChance);
+                if (brickMaxValueFlat > 0)
+                {
+                    brick.ResetBrick((int)Mathf.Round(brickMaxValueFlat), useOperation, powerupChance);
+                } else
+                {
+                    brick.ResetBrick((int)Mathf.Round(maxTargetValue/brickMaxValueRatio), useOperation, powerupChance);
+                }
 
                 // Stop resetting once the minimum is met
                 activeBrickCount++;
@@ -231,7 +239,15 @@ public class GameController : MonoBehaviour
         foreach (Brick brick in  bricks)
         {
             brick.SetIsPowerup(powerupChance);
-            var term = brick.SetBrickMathValue((int)Mathf.Round(maxTargetValue / brickMaxValueRatio), useOperation);
+            var term = new DtoTerm();
+            if (brickMaxValueFlat > 0)
+            {
+                term = brick.SetBrickMathValue((int)Mathf.Round(brickMaxValueFlat), useOperation);
+            }
+            else
+            {
+                term = brick.SetBrickMathValue((int)Mathf.Round(maxTargetValue / brickMaxValueRatio), useOperation);
+            }
             allTerms.Add(term);
         }
 
