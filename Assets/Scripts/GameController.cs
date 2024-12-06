@@ -140,7 +140,7 @@ public class GameController : MonoBehaviour
         }
 
         float levelTime = inGameUIController.GetTime();
-        playerSave.ListOfTimesPast_Level1.Add(levelTime);
+        playerSave.TimesList_Level1.Add(levelTime);
 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(path);
