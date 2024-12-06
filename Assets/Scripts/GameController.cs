@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class GameController : MonoBehaviour
@@ -67,6 +68,7 @@ public class GameController : MonoBehaviour
         InitInGameUIController();
         PowerupManager.Instance.SetPowerups(usePowerup);
         path = PlayerSave.GetFilePath();
+        Debug.Log(path);
     }
 
     public void InitGameObjects()
@@ -106,6 +108,7 @@ public class GameController : MonoBehaviour
         gameOverScreen.GetComponent<Canvas>().enabled = true;
         Time.timeScale = 0;
         inGameUIController.StopTimer();
+        SaveTime();
     }
 
     public void LooseALife()
@@ -140,7 +143,18 @@ public class GameController : MonoBehaviour
         }
 
         float levelTime = inGameUIController.GetTime();
-        playerSave.TimesList_Level1.Add(levelTime);
+        if (SceneManager.GetActiveScene().name == "Level_1")
+        {
+            playerSave.TimesList_Level_1.Add(levelTime);
+        }
+        if (SceneManager.GetActiveScene().name == "Level_2")
+        {
+            playerSave.TimesList_Level_2.Add(levelTime);
+        }
+        if (SceneManager.GetActiveScene().name == "Level_3")
+        {
+            playerSave.TimesList_Level_3.Add(levelTime);
+        }
 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(path);
