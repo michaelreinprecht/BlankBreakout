@@ -4464,6 +4464,10 @@ PrefabInstance:
       propertyPath: timerManager
       value: 
       objectReference: {fileID: 5241348301477514473, guid: e7b18bb131c009f45a9b9bf126e32733, type: 3}
+    - target: {fileID: 5291148038416189697, guid: c8897cf7c74b5344e856ab6040b58db9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5681414971187792546, guid: c8897cf7c74b5344e856ab6040b58db9, type: 3}
       propertyPath: m_Name
       value: UI

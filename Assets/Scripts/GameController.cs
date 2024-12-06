@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private int maxTargetValue = 20;
     [SerializeField] 
-    private int paddleValue = 1;
+    private int paddleValue = 0;
     [SerializeField]
     private int numberOfTargets = 3;
     [SerializeField]
