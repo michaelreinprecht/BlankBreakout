@@ -10,6 +10,7 @@ public class LevelSettingsController : MonoBehaviour
     private void Start()
     {
         maxTargetInput = gameObject.GetComponent<TMP_InputField>();
+        SharedData.MaxTargetValue = 20;
     }
 
     public void SetSharedMaxTargetValue(string newValue)

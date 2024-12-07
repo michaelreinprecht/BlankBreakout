@@ -85,6 +85,7 @@ public class GameController : MonoBehaviour
     {
         if (SharedData.MaxTargetValue != -1)
         {
+            Debug.Log("mAXtargetvalue: " + SharedData.MaxTargetValue);
             maxTargetValue = SharedData.MaxTargetValue;
             if (SceneManager.GetActiveScene().name == "Level_2")
             {

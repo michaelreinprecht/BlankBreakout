@@ -3,11 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
 {
-    private void Start()
-    {
-        SharedData.MaxTargetValue = 20;
-    }
-
     public void ReloadCurrentScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
