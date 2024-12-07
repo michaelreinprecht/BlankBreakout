@@ -13,7 +13,9 @@ public class PaddleController : MonoBehaviour
     [SerializeField] 
     private TMP_Text textObject;
     [SerializeField]
-    private TMP_Text historyLog;
+    private TMP_Text historyLogWon;
+    [SerializeField]
+    private TMP_Text historyLogLost;
     private string currentHistoryLine;
 
     private int maxValue;
@@ -25,7 +27,8 @@ public class PaddleController : MonoBehaviour
 
     private void Start()
     {
-        historyLog.text = "<color=#005500><b>Reached Goals:</b></color>\n\n";
+        historyLogWon.text = "<color=#005500><b>Reached Goals:</b></color>\n\n";
+        historyLogLost.text = "<color=#005500><b>Reached Goals:</b></color>\n\n";
         currentHistoryLine += value.ToString();
     }
 
@@ -132,11 +135,13 @@ public class PaddleController : MonoBehaviour
 
     public void LogTargetHit()
     {
-        historyLog.text += currentHistoryLine + " = <color=#005500>" + value.ToString() + "</color>\n";
+        historyLogWon.text += currentHistoryLine + " = <color=#005500>" + value.ToString() + "</color>\n";
+        historyLogLost.text += currentHistoryLine + " = <color=#005500>" + value.ToString() + "</color>\n";
     }
 
     public void LogNonTargetHit()
     {
-        historyLog.text += currentHistoryLine + " = <color=#ff0000>" + value.ToString() + "</color>\n";
+        historyLogWon.text += currentHistoryLine + " = <color=#ff0000>" + value.ToString() + "</color>\n";
+        historyLogLost.text += currentHistoryLine + " = <color=#ff0000>" + value.ToString() + "</color>\n";
     }
 }

@@ -22,6 +22,7 @@ public class HeartsManager : MonoBehaviour
 
     public void RemoveHeart()
     {
+        SoundManager.Instance.PlaySound("LifeLost", 1f);
         numberOfHearts--;
         UpdateUi();
         

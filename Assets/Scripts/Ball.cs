@@ -50,7 +50,8 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.CompareTag("Border"))
         {
             SoundManager.Instance.PlaySound("BrickHit1", 1f);
-        }   
+            BrickCollisionParticles.Play();
+        }
     }
 
     private void PlayCollisionAnimation(Collision collision)
