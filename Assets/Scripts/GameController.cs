@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -102,8 +103,8 @@ public class GameController : MonoBehaviour
     public void InitInGameUIController()
     {
         inGameUIController.SetLives(lives);
-        inGameUIController.AllLivesLost += GameOver;
-        inGameUIController.TargetsCleared += LevelWon;
+        inGameUIController.AllLivesLost += () => { StartCoroutine(GameOver()); };
+        inGameUIController.TargetsCleared += () => { StartCoroutine(LevelWon());};
         inGameUIController.NonTargetCleared += () => { };
         inGameUIController.StartTimer();
     }
@@ -122,8 +123,9 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void GameOver()
+    public IEnumerator GameOver()
     {
+        yield return new WaitForSeconds(0.1f);
         SoundManager.Instance.PlaySound("GameOver", 1f);
         gameOverScreen.GetComponent<Canvas>().enabled = true;
         Time.timeScale = 0;
@@ -132,6 +134,18 @@ public class GameController : MonoBehaviour
         {
             levelEndTimeGameOver.text = inGameUIController.GetTimeAsString();
         }
+    }
+
+    public IEnumerator LevelWon()
+    {
+        yield return new WaitForSeconds(0.1f);
+        SoundManager.Instance.PlaySound("GameWon", 0.05f);
+        PlayGameWonParticles();
+        inGameUIController.StopTimer();
+        Time.timeScale = 0;
+        LevelWonScreen.GetComponent<Canvas>().enabled = true;
+        SaveTime();
+        levelEndTimeLevelWon.text = inGameUIController.GetTimeAsString();
     }
 
     public void LooseALife()
@@ -147,17 +161,6 @@ public class GameController : MonoBehaviour
             BallManager ballManager = GameObject.FindGameObjectWithTag("Ball").GetComponent<BallManager>();
             ballManager.ResetBallPhysics();
         }
-    }
-
-    public void LevelWon()
-    {
-        SoundManager.Instance.PlaySound("GameWon", 0.05f);
-        PlayGameWonParticles();
-        inGameUIController.StopTimer();
-        Time.timeScale = 0;
-        LevelWonScreen.GetComponent<Canvas>().enabled = true;
-        SaveTime();
-        levelEndTimeLevelWon.text = inGameUIController.GetTimeAsString();
     }
 
     private void PlayGameWonParticles()

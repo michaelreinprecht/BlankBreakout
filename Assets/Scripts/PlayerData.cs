@@ -41,7 +41,7 @@ public class PlayerData : MonoBehaviour
     void Start()
     {
         path = Application.persistentDataPath + "/timersave.save";
-        LoadHighscores(path);
+        LoadHighScores(path);
     }
   
  
@@ -50,7 +50,7 @@ public class PlayerData : MonoBehaviour
         
     }
 
-    public void LoadHighscores(string filePath)
+    public void LoadHighScores(string filePath)
     {
         if (filePath != null)
         {
