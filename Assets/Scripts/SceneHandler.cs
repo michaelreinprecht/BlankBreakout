@@ -3,6 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
 {
+    private void Start()
+    {
+        SharedData.MaxTargetValue = 20;
+    }
+
     public void ReloadCurrentScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -22,8 +27,15 @@ public class SceneHandler : MonoBehaviour
     {
         if (int.TryParse(newValue, out int parsedValue))
         {
-            SharedData.MaxTargetValue = Mathf.Abs(parsedValue);
-            Debug.Log($"SharedData.MaxTargetValue updated to: {SharedData.MaxTargetValue}");
+            if (Mathf.Abs(parsedValue) >= 20)
+            {
+                SharedData.MaxTargetValue = Mathf.Abs(parsedValue);
+                Debug.Log($"SharedData.MaxTargetValue updated to: {SharedData.MaxTargetValue}");
+            } else
+            {
+                Debug.Log($"MaxTargetValue to small, set to minimum of 20");
+                SharedData.MaxTargetValue = 20;
+            }
         }
     }
 }
