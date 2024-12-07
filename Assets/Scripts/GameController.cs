@@ -62,6 +62,9 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private TMP_Text levelEndTimeLevelWon;
 
+    [SerializeField]
+    private List<ParticleSystem> gameWonParticles = new();
+
     private string path;
 
     // Start is called before the first frame update
@@ -70,7 +73,6 @@ public class GameController : MonoBehaviour
         SetupLevelSettings();
         SetupBall();
         SetupBricks();
-        //InvokeRepeating("CheckForEndOfGame", 20, 3);
         InvokeRepeating("CheckForLowBrickNumber", 20, 3);
         InitGameObjects();
         InitInGameUIController();
@@ -150,11 +152,20 @@ public class GameController : MonoBehaviour
     public void LevelWon()
     {
         SoundManager.Instance.PlaySound("GameWon", 0.05f);
+        PlayGameWonParticles();
         inGameUIController.StopTimer();
         Time.timeScale = 0;
         LevelWonScreen.GetComponent<Canvas>().enabled = true;
         SaveTime();
         levelEndTimeLevelWon.text = inGameUIController.GetTimeAsString();
+    }
+
+    private void PlayGameWonParticles()
+    {
+        foreach (ParticleSystem particleSystem in gameWonParticles)
+        {
+            particleSystem.Play();
+        }
     }
 
     private void SaveTime()
@@ -205,14 +216,6 @@ public class GameController : MonoBehaviour
             
         }
         return null;
-    }
-
-    public void CheckForEndOfGame()
-    {        
-        //if (GameObject.Find("BrickLineC").transform.childCount == 0)
-        //{
-        //    SceneManager.LoadScene(0);
-        //}
     }
 
     public void CheckForLowBrickNumber()
