@@ -17,4 +17,13 @@ public class SceneHandler : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void SetSharedMaxTargetValue(string newValue)
+    {
+        if (int.TryParse(newValue, out int parsedValue))
+        {
+            SharedData.MaxTargetValue = Mathf.Abs(parsedValue);
+            Debug.Log($"SharedData.MaxTargetValue updated to: {SharedData.MaxTargetValue}");
+        }
+    }
 }

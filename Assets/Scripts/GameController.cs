@@ -67,6 +67,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SetupLevelSettings();
         SetupBall();
         SetupBricks();
         //InvokeRepeating("CheckForEndOfGame", 20, 3);
@@ -75,6 +76,14 @@ public class GameController : MonoBehaviour
         InitInGameUIController();
         PowerupManager.Instance.SetPowerups(usePowerup);
         path = PlayerSave.GetFilePath();
+    }
+
+    private void SetupLevelSettings()
+    {
+        if (SharedData.MaxTargetValue != -1)
+        {
+            maxTargetValue = SharedData.MaxTargetValue;
+        }
     }
 
     public void InitGameObjects()
@@ -92,10 +101,6 @@ public class GameController : MonoBehaviour
         inGameUIController.StartTimer();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
 
     public void CheckTargets()
     {
@@ -116,7 +121,10 @@ public class GameController : MonoBehaviour
         gameOverScreen.GetComponent<Canvas>().enabled = true;
         Time.timeScale = 0;
         inGameUIController.StopTimer();
-        levelEndTimeGameOver.text = inGameUIController.GetTimeAsString();
+        if (levelEndTimeGameOver != null)
+        {
+            levelEndTimeGameOver.text = inGameUIController.GetTimeAsString();
+        }
     }
 
     public void LooseALife()
