@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -9,13 +7,6 @@ public class DropDown_MathOp : MonoBehaviour
     public TextMeshPro mathValueText;
     public int mathValue;
     public MathOperatorsEnum mathOperator;
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        gameObject.SetActive(false);
-    }
 
     public void SetDropDownValue(MathOperatorsEnum brickMathOperator, int brickMathValue)
     {

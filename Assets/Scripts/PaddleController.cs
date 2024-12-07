@@ -130,7 +130,7 @@ public class PaddleController : MonoBehaviour
             value = overflowValue;
             currentHistoryLine = string.Empty;
         }
-        ValueChanged();
+        ValueChanged?.Invoke(); //This line throws error
     }
 
     public void LogTargetHit()

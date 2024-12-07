@@ -69,7 +69,7 @@ public class GameController : MonoBehaviour
     private string path;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         SetupLevelSettings();
         SetupBall();
@@ -79,13 +79,13 @@ public class GameController : MonoBehaviour
         InitInGameUIController();
         PowerupManager.Instance.SetPowerups(usePowerup);
         path = PlayerSave.GetFilePath();
+        Debug.Log(path);
     }
 
     private void SetupLevelSettings()
     {
         if (SharedData.MaxTargetValue != -1)
         {
-            Debug.Log("mAXtargetvalue: " + SharedData.MaxTargetValue);
             maxTargetValue = SharedData.MaxTargetValue;
             if (SceneManager.GetActiveScene().name == "Level_2")
             {

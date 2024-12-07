@@ -33,7 +33,7 @@ public class Brick : MonoBehaviour
     private float scaleTimerMax = 1f;
     private float scaleTimer = 1f;
 
-    //private void Start()
+    //private void Awake()
     //{
     //    linkedDropDown = GetComponent<DropDown_MathOp>();
     //}
@@ -192,10 +192,9 @@ public class Brick : MonoBehaviour
 
     private void DropMathTerm()
     {
+        //This is the relevant code
         linkedDropDown.gameObject.SetActive(true);
-        //var rb = linkedDropDown.GetComponent<Rigidbody>();
-        //rb.GetComponent<Rigidbody>().useGravity = true;
-        //linkedDropDown.SetVisibility(true);
+        Rigidbody dropdownRb = linkedDropDown.GetComponent<Rigidbody>();
     }
 
     private void OnCollisionEnter(Collision collision)

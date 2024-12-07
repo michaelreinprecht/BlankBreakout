@@ -6,9 +6,13 @@ public class BallManager : MonoBehaviour
     private float ballSpeed = 10f;
     Rigidbody ballRb;
 
+    private void Awake()
+    {
+        ballRb = GetComponent<Rigidbody>(); //This line throws error   
+    }
+    
     private void Start()
     {
-        ballRb = GetComponent<Rigidbody>();
         Vector3 startVector = Vector3.up * ballSpeed;
         ballRb.AddForce(startVector);
     }
