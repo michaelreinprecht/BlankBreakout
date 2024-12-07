@@ -4158,7 +4158,7 @@ MonoBehaviour:
   minTargetValue: 0
   maxTargetValue: 20
   paddleValue: 20
-  numberOfTargets: 1
+  numberOfTargets: 3
   numberOfNonTargets: 2
   powerupChance: 10
   brickMaxValueRatio: 4
