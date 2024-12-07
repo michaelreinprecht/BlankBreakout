@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -8,16 +7,36 @@ using System.IO;
 public class PlayerData : MonoBehaviour
 {
     [SerializeField]
-    public TMP_Text averageTimeText;
+    public TMP_Text averageTimeTextAddition;
     [SerializeField]
-    public TMP_Text bestTimeText;
+    public TMP_Text bestTimeTextAddition;
     [SerializeField]
-    public TMP_Text gamesPlayedText;
-    
-    private float averageTime;
-    private float bestTime;
-    private int gamesPlayed;
-    private List<float> ListOfTimesPast = new List<float>();
+    public TMP_Text gamesPlayedTextAddition;
+    [SerializeField]
+    public TMP_Text averageTimeTextSubtraction;
+    [SerializeField]
+    public TMP_Text bestTimeTextSubtraction;
+    [SerializeField]
+    public TMP_Text gamesPlayedTextSubtraction;
+    [SerializeField]
+    public TMP_Text averageTimeTextMultiplication;
+    [SerializeField]
+    public TMP_Text bestTimeTextMultiplication;
+    [SerializeField]
+    public TMP_Text gamesPlayedTextMultiplication;
+
+    private float averageTimeAddition;
+    private float bestTimeAddition;
+    private int gamesPlayedAddition;
+    private float averageTimeSubtraction;
+    private float bestTimeSubtraction;
+    private int gamesPlayedSubtraction;
+    private float averageTimeMultiplication;
+    private float bestTimeMultiplication;
+    private int gamesPlayedMultiplication;
+    private List<float> TimesListAddition = new List<float>();
+    private List<float> TimesListSubtraction= new List<float>();
+    private List<float> TimesListMultiplication= new List<float>();
     private string path;
     void Start()
     {
@@ -41,10 +60,28 @@ public class PlayerData : MonoBehaviour
                 FileStream file = File.Open(filePath, FileMode.Open);
                 PlayerSave save = (PlayerSave)bf.Deserialize(file);
                 file.Close();
-                ListOfTimesPast = save.ListOfTimesPast_Level1;
-                averageTime = GetAverageTime(ListOfTimesPast);
-                bestTime = GetBestTime(ListOfTimesPast);
-                gamesPlayed = ListOfTimesPast.Count;
+                TimesListAddition = save.TimesList_Level_1;
+                if (TimesListAddition.Count > 0)
+                {
+                    averageTimeAddition = GetAverageTime(TimesListAddition);
+                    bestTimeAddition = GetBestTime(TimesListAddition);
+                    gamesPlayedAddition = TimesListAddition.Count;
+                }
+                TimesListSubtraction = save.TimesList_Level_2;
+                if (TimesListSubtraction.Count > 0)
+                {
+                    averageTimeSubtraction = GetAverageTime(TimesListSubtraction);
+                    bestTimeSubtraction = GetBestTime(TimesListSubtraction);
+                    gamesPlayedSubtraction = TimesListSubtraction.Count;
+                }
+                
+                TimesListMultiplication= save.TimesList_Level_3;
+                if (TimesListMultiplication.Count > 0)
+                {
+                    averageTimeMultiplication = GetAverageTime(TimesListMultiplication);
+                    bestTimeMultiplication = GetBestTime(TimesListMultiplication);
+                    gamesPlayedMultiplication = TimesListMultiplication.Count;
+                }
             }
             else
             {
@@ -70,36 +107,63 @@ public class PlayerData : MonoBehaviour
 
     private float GetBestTime(List<float> allData)
     {
-        float best = allData[0];
-        foreach (float time in allData)
+        if (allData.Count > 0)
         {
-            if (time < best)
+            float best = allData[0];
+            foreach (float time in allData)
             {
-                best = time;
+                if (time < best)
+                {
+                    best = time;
+                }
             }
+            return best;
         }
-        return best;
+        else
+        {
+            return 0;
+        }
     }
 
     private void SetTextFields()
     {
-        if (averageTime == 0 || bestTime == 0 || gamesPlayed == 0)
+        averageTimeTextAddition.text = FormatTime(averageTimeAddition);
+        averageTimeTextSubtraction.text = FormatTime(averageTimeSubtraction);
+        averageTimeTextMultiplication.text = FormatTime(averageTimeMultiplication);
+        bestTimeTextAddition.text = FormatTime(bestTimeAddition);
+        bestTimeTextSubtraction.text = FormatTime(bestTimeSubtraction);
+        bestTimeTextMultiplication.text = FormatTime(bestTimeMultiplication);
+        if (gamesPlayedAddition == 0)
         {
-            Debug.LogError("Text fields not set in PlayerData");
-            averageTimeText.text = "0:00";
-            bestTimeText.text = "0:00";
-            gamesPlayedText.text = "0";
-            return;
+            gamesPlayedTextAddition.text = "-";
         } 
         else
-        {   
-        averageTimeText.text = FormatTime(averageTime);
-        bestTimeText.text = FormatTime(bestTime);
-        gamesPlayedText.text = gamesPlayed.ToString();
+        {
+            gamesPlayedTextAddition.text = gamesPlayedAddition.ToString();
+        }
+        if (gamesPlayedSubtraction == 0)
+        {
+            gamesPlayedTextSubtraction.text = "-";
+        }
+        else
+        {
+            gamesPlayedTextSubtraction.text = gamesPlayedSubtraction.ToString();
+        }
+        if (gamesPlayedMultiplication == 0)
+        {
+            gamesPlayedTextMultiplication.text = "-";
+        }
+        else
+        {
+            gamesPlayedTextMultiplication.text = gamesPlayedMultiplication.ToString();
         }
     }
 
-    private string FormatTime(float time){
+    private string FormatTime(float time) {
+        if (time <= 0)
+        {
+            return "-";
+        }
         int minutes = Mathf.FloorToInt(time / 60F);
         int seconds = Mathf.FloorToInt(time - minutes * 60);
         return string.Format("{0:0}:{1:00}", minutes, seconds);

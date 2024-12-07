@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class GameController : MonoBehaviour
@@ -26,6 +27,10 @@ public class GameController : MonoBehaviour
     private int numberOfNonTargets = 3;
     [SerializeField]
     private int powerupChance = 20;
+    [SerializeField]
+    private int brickMaxValueRatio = 4;
+    [SerializeField]
+    private int brickMaxValueFlat = 0;
     [SerializeField]
     private List<GameObject> usePowerup = new();
     [SerializeField]
@@ -97,10 +102,12 @@ public class GameController : MonoBehaviour
         if (inGameUIController.ContainsTarget(paddle.GetValue()))
         {
             paddle.LogTargetHit();
+            SoundManager.Instance.PlaySound("TargetReached", 1f);
         }
         if (inGameUIController.ContainsNonTarget(paddle.GetValue()))
         {
             paddle.LogNonTargetHit();
+            SoundManager.Instance.PlaySound("nonTargetReached", 1f);
         }
     }
 
@@ -145,7 +152,18 @@ public class GameController : MonoBehaviour
         }
 
         float levelTime = inGameUIController.GetTime();
-        playerSave.ListOfTimesPast_Level1.Add(levelTime);
+        if (SceneManager.GetActiveScene().name == "Level_1")
+        {
+            playerSave.TimesList_Level_1.Add(levelTime);
+        }
+        if (SceneManager.GetActiveScene().name == "Level_2")
+        {
+            playerSave.TimesList_Level_2.Add(levelTime);
+        }
+        if (SceneManager.GetActiveScene().name == "Level_3")
+        {
+            playerSave.TimesList_Level_3.Add(levelTime);
+        }
 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(path);
@@ -201,7 +219,13 @@ public class GameController : MonoBehaviour
 
             foreach (Brick brick in inactiveBricks)
             {
-                brick.ResetBrick((int)Mathf.Round(maxTargetValue/4), useOperation, powerupChance);
+                if (brickMaxValueFlat > 0)
+                {
+                    brick.ResetBrick((int)Mathf.Round(brickMaxValueFlat), useOperation, powerupChance);
+                } else
+                {
+                    brick.ResetBrick((int)Mathf.Round(maxTargetValue/brickMaxValueRatio), useOperation, powerupChance);
+                }
 
                 // Stop resetting once the minimum is met
                 activeBrickCount++;
@@ -222,7 +246,15 @@ public class GameController : MonoBehaviour
         foreach (Brick brick in  bricks)
         {
             brick.SetIsPowerup(powerupChance);
-            var term = brick.SetBrickMathValue((int)Mathf.Round(maxTargetValue / 4), useOperation);
+            var term = new DtoTerm();
+            if (brickMaxValueFlat > 0)
+            {
+                term = brick.SetBrickMathValue((int)Mathf.Round(brickMaxValueFlat), useOperation);
+            }
+            else
+            {
+                term = brick.SetBrickMathValue((int)Mathf.Round(maxTargetValue / brickMaxValueRatio), useOperation);
+            }
             allTerms.Add(term);
         }
 
@@ -236,7 +268,7 @@ public class GameController : MonoBehaviour
         int calculateTarget = paddleValue;
         while (targets.Count < numberOfTargets)
         {
-            int termLength = Random.Range(2, 4); //To reach next target you ideally need 2 or 3 bricks 
+            int termLength = Random.Range(2, 4); //To reach next target you ideally need 2 or 3 bricks
 
             for (int i = 0; i < termLength; i++)
             {
@@ -262,15 +294,16 @@ public class GameController : MonoBehaviour
 
             while (calculateTarget < minTargetValue || calculateTarget > maxTargetValue)
             {
+                int overflow;
                 if (calculateTarget < minTargetValue)
                 {
-                    int overflow = calculateTarget - minTargetValue;
-                    calculateTarget = overflowValue - overflow;
+                    overflow = minTargetValue - calculateTarget;
+                    calculateTarget = overflowValue + overflow;
                 }
                 else if (calculateTarget > maxTargetValue)
                 {
-                    int overflow = calculateTarget - maxTargetValue;
-                    calculateTarget = overflowValue + overflow;
+                    overflow = calculateTarget - maxTargetValue;
+                    calculateTarget = overflowValue - overflow;
                 }
             }
 

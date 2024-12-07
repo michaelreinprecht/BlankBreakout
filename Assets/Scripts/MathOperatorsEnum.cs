@@ -16,7 +16,7 @@ public static class MathOperatorsEnumExtensions
         {
             MathOperatorsEnum.SUBTRACTION => "-",
             MathOperatorsEnum.ADDITION => "+",
-            MathOperatorsEnum.MULTIPLICATION => "*",
+            MathOperatorsEnum.MULTIPLICATION => "x",
             _ => throw new ArgumentOutOfRangeException(nameof(mathOperator), $"Unsupported math operator: {mathOperator}")
         };
     }

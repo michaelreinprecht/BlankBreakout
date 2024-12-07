@@ -66,7 +66,13 @@ public class Brick : MonoBehaviour
         this.mathOperator = (MathOperatorsEnum)validOperations[UnityEngine.Random.Range(0, validOperations.Count)];
 
         currentHitPoints = hitPoints;
-        mathValue = UnityEngine.Random.Range(1, maxValue);
+        if (mathOperator == MathOperatorsEnum.MULTIPLICATION)
+        {
+            mathValue = UnityEngine.Random.Range(2, maxValue);
+        } else
+        {
+            mathValue = UnityEngine.Random.Range(1, maxValue);
+        }
         mathValueTextBrick.text = mathOperator.ToSymbol() + mathValue.ToString();
         SetupDropdown();
 
