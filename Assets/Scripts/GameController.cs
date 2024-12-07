@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,7 +20,7 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private int maxTargetValue = 20;
     [SerializeField] 
-    private int paddleValue = 1;
+    private int paddleValue = 0;
     [SerializeField]
     private int numberOfTargets = 3;
     [SerializeField]
@@ -56,12 +57,17 @@ public class GameController : MonoBehaviour
     private List<Brick> bricksRowC = new();
     [SerializeField]
     private List<Brick> bricks = new();
+    [SerializeField]
+    private TMP_Text levelEndTimeGameOver;
+    [SerializeField]
+    private TMP_Text levelEndTimeLevelWon;
 
     private string path;
 
     // Start is called before the first frame update
     void Start()
     {
+        SetupLevelSettings();
         SetupBall();
         SetupBricks();
         //InvokeRepeating("CheckForEndOfGame", 20, 3);
@@ -70,7 +76,14 @@ public class GameController : MonoBehaviour
         InitInGameUIController();
         PowerupManager.Instance.SetPowerups(usePowerup);
         path = PlayerSave.GetFilePath();
-        Debug.Log(path);
+    }
+
+    private void SetupLevelSettings()
+    {
+        if (SharedData.MaxTargetValue != -1)
+        {
+            maxTargetValue = SharedData.MaxTargetValue;
+        }
     }
 
     public void InitGameObjects()
@@ -88,10 +101,6 @@ public class GameController : MonoBehaviour
         inGameUIController.StartTimer();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
 
     public void CheckTargets()
     {
@@ -112,7 +121,10 @@ public class GameController : MonoBehaviour
         gameOverScreen.GetComponent<Canvas>().enabled = true;
         Time.timeScale = 0;
         inGameUIController.StopTimer();
-        SaveTime();
+        if (levelEndTimeGameOver != null)
+        {
+            levelEndTimeGameOver.text = inGameUIController.GetTimeAsString();
+        }
     }
 
     public void LooseALife()
@@ -136,6 +148,7 @@ public class GameController : MonoBehaviour
         Time.timeScale = 0;
         LevelWonScreen.GetComponent<Canvas>().enabled = true;
         SaveTime();
+        levelEndTimeLevelWon.text = inGameUIController.GetTimeAsString();
     }
 
     private void SaveTime()

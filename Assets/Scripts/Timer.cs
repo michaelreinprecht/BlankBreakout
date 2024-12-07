@@ -53,4 +53,9 @@ public class Timer : MonoBehaviour
     {
         return timer;
     }
+
+    public string GetTimeAsString()
+    {
+        return FormatTimeTextField();
+    }
 }
