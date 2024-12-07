@@ -83,6 +83,11 @@ public class GameController : MonoBehaviour
         if (SharedData.MaxTargetValue != -1)
         {
             maxTargetValue = SharedData.MaxTargetValue;
+            if (SceneManager.GetActiveScene().name == "Level_2")
+            {
+                overflowValue = maxTargetValue;
+                paddleValue = maxTargetValue;
+            }
         }
     }
 
@@ -112,12 +117,12 @@ public class GameController : MonoBehaviour
         if (inGameUIController.ContainsNonTarget(paddle.GetValue()))
         {
             paddle.LogNonTargetHit();
-            SoundManager.Instance.PlaySound("nonTargetReached", 1f);
         }
     }
 
     public void GameOver()
     {
+        SoundManager.Instance.PlaySound("GameOver", 1f);
         gameOverScreen.GetComponent<Canvas>().enabled = true;
         Time.timeScale = 0;
         inGameUIController.StopTimer();
@@ -144,6 +149,7 @@ public class GameController : MonoBehaviour
 
     public void LevelWon()
     {
+        SoundManager.Instance.PlaySound("GameWon", 0.05f);
         inGameUIController.StopTimer();
         Time.timeScale = 0;
         LevelWonScreen.GetComponent<Canvas>().enabled = true;
