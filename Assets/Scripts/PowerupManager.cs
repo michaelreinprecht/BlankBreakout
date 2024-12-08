@@ -110,7 +110,10 @@ public class PowerupManager : MonoBehaviour
         while (scaleTimer < scaleDuration)
         {
             scaleTimer += Time.deltaTime;
-            paddle.transform.localScale = Vector3.Lerp(originalScale, targetScale, scaleTimer / scaleDuration);
+            if (paddle != null)
+            {
+                paddle.transform.localScale = Vector3.Lerp(originalScale, targetScale, scaleTimer / scaleDuration);
+            }
             yield return null;
         }
 
@@ -122,7 +125,10 @@ public class PowerupManager : MonoBehaviour
         while (scaleTimer < scaleDuration)
         {
             scaleTimer += Time.deltaTime;
-            paddle.transform.localScale = Vector3.Lerp(targetScale, originalScale, scaleTimer / scaleDuration);
+            if (paddle != null)
+            {
+                paddle.transform.localScale = Vector3.Lerp(targetScale, originalScale, scaleTimer / scaleDuration);
+            }
             yield return null;
         }
 

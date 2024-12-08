@@ -66,8 +66,6 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private List<ParticleSystem> gameWonParticles = new();
 
-    private string path;
-
     // Start is called before the first frame update
     private void Start()
     {
@@ -78,8 +76,6 @@ public class GameController : MonoBehaviour
         InitGameObjects();
         InitInGameUIController();
         PowerupManager.Instance.SetPowerups(usePowerup);
-        path = PlayerSave.GetFilePath();
-        Debug.Log(path);
     }
 
     private void SetupLevelSettings()
@@ -146,7 +142,10 @@ public class GameController : MonoBehaviour
         Time.timeScale = 0;
         LevelWonScreen.GetComponent<Canvas>().enabled = true;
         SaveTime();
-        levelEndTimeLevelWon.text = inGameUIController.GetTimeAsString();
+        if (levelEndTimeLevelWon != null)
+        {
+            levelEndTimeLevelWon.text = inGameUIController.GetTimeAsString();
+        }
     }
 
     public void LooseALife()
@@ -174,53 +173,23 @@ public class GameController : MonoBehaviour
 
     private void SaveTime()
     {
-        PlayerSave playerSave = LoadPlayerSave();
-        if (playerSave == null)
-        {
-            playerSave = new PlayerSave();
-        }
-
         float levelTime = inGameUIController.GetTime();
         if (SceneManager.GetActiveScene().name == "Level_1")
         {
-            playerSave.TimesList_Level_1.Add(levelTime);
+            HighscoreData.Instance.SaveHighScore("Addition", levelTime);
         }
         if (SceneManager.GetActiveScene().name == "Level_2")
         {
-            playerSave.TimesList_Level_2.Add(levelTime);
+            Debug.Log(inGameUIController.GetTime());
+            HighscoreData.Instance.SaveHighScore("Subtraction", levelTime);
         }
         if (SceneManager.GetActiveScene().name == "Level_3")
         {
-            playerSave.TimesList_Level_3.Add(levelTime);
+            HighscoreData.Instance.SaveHighScore("Multiplication", levelTime);
         }
-
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(path);
-        bf.Serialize(file, playerSave);
-        file.Close();
     }
 
-    private PlayerSave LoadPlayerSave()
-    {
-        if (File.Exists(path))
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(path, FileMode.Open);
-            try 
-            {
-                PlayerSave playerSave = (PlayerSave)bf.Deserialize(file);
-                file.Close();
-                return playerSave;
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError("Error loading save file: " + e.Message);
-                file.Close();
-            }
-            
-        }
-        return null;
-    }
+
 
     public void CheckForLowBrickNumber()
     {
